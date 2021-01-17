@@ -10,8 +10,9 @@ class DigitTestViewController: UIViewController {
 	lazy var mainStack: UIStackView = {
 		let stack = UIStackView()
 		stack.axis = .vertical
-		stack.alignment = .center
 		stack.alignment = .fill
+		stack.distribution = .fill
+		stack.spacing = 64.0
 		return stack
 	}()
 
@@ -20,6 +21,7 @@ class DigitTestViewController: UIViewController {
 		label.text = "this is a sample phrase"
 		label.textColor = .white
 		label.numberOfLines = 0
+		label.textAlignment = .center
 		return label
 	}()
 
@@ -29,6 +31,7 @@ class DigitTestViewController: UIViewController {
 		label.font = UIFont.boldSystemFont(ofSize: 18)
 		label.textColor = .yellow
 		label.keyboardType = .numberPad
+		label.textAlignment = .center
 		return label
 	}()
 
@@ -37,20 +40,35 @@ class DigitTestViewController: UIViewController {
 		stack.axis = .vertical
 		stack.distribution = .fillEqually
 		stack.spacing = 16.0
-		for i in 0..<3 {
+		for i in 0..<4 {
 			let horizontalStack = UIStackView()
 			horizontalStack.axis = .horizontal
 			horizontalStack.distribution = .fillEqually
 			horizontalStack.alignment = .fill
 			stack.addArrangedSubview(horizontalStack)
 			horizontalStack.spacing = 16.0
-			horizontalStack.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: 0.3).isActive = true
 
 			for y in 0..<3 {
-				let button = UIButton()
-				button.backgroundColor = .red
-				button.setTitle("hello", for: .normal)
-				horizontalStack.addArrangedSubview(button)
+				let index = i*3 + y
+				if index == 9 || index == 11 {
+					horizontalStack.addArrangedSubview(UIView())
+				} else if index == 10 {
+					let button = UIButton()
+					button.backgroundColor = .red
+					let numberString = "\(0)"
+					button.setTitle(numberString, for: .normal)
+					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
+					button.layer.cornerRadius = 8.0
+					horizontalStack.addArrangedSubview(button)
+				} else {
+					let button = UIButton()
+					button.backgroundColor = .red
+					let numberString = "\(index+1)"
+					button.setTitle(numberString, for: .normal)
+					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
+					button.layer.cornerRadius = 8.0
+					horizontalStack.addArrangedSubview(button)
+				}
 			}
 		}
 		return stack
@@ -75,7 +93,6 @@ class DigitTestViewController: UIViewController {
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
 
-
 		generateNumber()
     }
 
@@ -92,6 +109,10 @@ class DigitTestViewController: UIViewController {
 		answer = "\(numberString)"
 		phraseLabel.text = numberPhrase
 		answerLabel.text = ""
+	}
+
+	@objc func pressedKey() {
+		print("pressed key")
 	}
 }
 
