@@ -18,7 +18,6 @@ class DigitTestViewController: UIViewController {
 
 	let phraseLabel: UILabel = {
 		let label = UILabel()
-		label.text = "this is a sample phrase"
 		label.textColor = .white
 		label.numberOfLines = 0
 		label.textAlignment = .center
@@ -27,7 +26,7 @@ class DigitTestViewController: UIViewController {
 
 	let answerLabel: UITextField = {
 		let label = UITextField()
-		label.placeholder = "_ _ _ _"
+		label.placeholder = "_"
 		label.font = UIFont.boldSystemFont(ofSize: 18)
 		label.textColor = .yellow
 		label.keyboardType = .numberPad
@@ -56,6 +55,7 @@ class DigitTestViewController: UIViewController {
 					let button = UIButton()
 					button.backgroundColor = .red
 					let numberString = "\(0)"
+					button.tag = 0
 					button.setTitle(numberString, for: .normal)
 					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
 					button.layer.cornerRadius = 8.0
@@ -64,6 +64,7 @@ class DigitTestViewController: UIViewController {
 					let button = UIButton()
 					button.backgroundColor = .red
 					let numberString = "\(index+1)"
+					button.tag = index+1
 					button.setTitle(numberString, for: .normal)
 					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
 					button.layer.cornerRadius = 8.0
@@ -96,10 +97,6 @@ class DigitTestViewController: UIViewController {
 		generateNumber()
     }
 
-	override func viewDidAppear(_ animated: Bool) {
-		answerLabel.delegate = self
-		answerLabel.becomeFirstResponder()
-	}
 
 	func generateNumber() {
 		let number = Int.random(in: 10000...19999)
@@ -111,36 +108,22 @@ class DigitTestViewController: UIViewController {
 		answerLabel.text = ""
 	}
 
-	@objc func pressedKey() {
-		print("pressed key")
-	}
-}
-
-extension DigitTestViewController: UITextFieldDelegate {
-	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		print("editing")
-		return true
-	}
-
-	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-		print(string)
-		if string == answer.dropFirst(answerIndex).prefix(1) {
+	@objc func pressedKey(sender: UIButton) {
+		if "\(sender.tag)" == answer.dropFirst(answerIndex).prefix(1) {
 
 			print("answer is \(answer.dropFirst(answerIndex).prefix(1)) correct")
 			answerIndex += 1
-			return !checkDone()
+			answerLabel.text = "\(answerLabel.text ?? "") \(sender.tag)"
+			checkDone()
 		}
 		print("answer is \(answer.prefix(1)) incorrect")
-		return false
 	}
 
-	func checkDone() -> Bool {
+	func checkDone(){
 		if answerIndex == answer.count {
 			print("done")
 			answerIndex = 0
 			generateNumber()
-			return true
 		}
-		return false
 	}
 }
