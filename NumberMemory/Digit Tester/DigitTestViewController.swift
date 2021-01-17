@@ -11,6 +11,7 @@ class DigitTestViewController: UIViewController {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.alignment = .center
+		stack.alignment = .fill
 		return stack
 	}()
 
@@ -31,6 +32,30 @@ class DigitTestViewController: UIViewController {
 		return label
 	}()
 
+	let keyStack: UIView = {
+		let stack = UIStackView()
+		stack.axis = .vertical
+		stack.distribution = .fillEqually
+		stack.spacing = 16.0
+		for i in 0..<3 {
+			let horizontalStack = UIStackView()
+			horizontalStack.axis = .horizontal
+			horizontalStack.distribution = .fillEqually
+			horizontalStack.alignment = .fill
+			stack.addArrangedSubview(horizontalStack)
+			horizontalStack.spacing = 16.0
+			horizontalStack.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: 0.3).isActive = true
+
+			for y in 0..<3 {
+				let button = UIButton()
+				button.backgroundColor = .red
+				button.setTitle("hello", for: .normal)
+				horizontalStack.addArrangedSubview(button)
+			}
+		}
+		return stack
+	}()
+
 	//MARK: Set-up
 
     override func viewDidLoad() {
@@ -40,12 +65,15 @@ class DigitTestViewController: UIViewController {
 		view.addSubview(mainStack)
 		mainStack.translatesAutoresizingMaskIntoConstraints = false
 		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-		mainStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
 		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
 		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
 
 		mainStack.addArrangedSubview(phraseLabel)
 		mainStack.addArrangedSubview(answerLabel)
+
+		mainStack.addArrangedSubview(keyStack)
+		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
 
 
 		generateNumber()
