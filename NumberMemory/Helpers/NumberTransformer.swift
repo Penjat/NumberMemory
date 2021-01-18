@@ -4,17 +4,17 @@ import UIKit
 
 class NumberTransformer {
 	let personAttributes: [NSAttributedString.Key : Any] = {
-		let outputFont = UIFont.systemFont(ofSize: 16)
+		let outputFont = UIFont.CustomStyle.personNameFont
 		return [NSAttributedString.Key.font: outputFont, NSAttributedString.Key.foregroundColor : UIColor.darkGray]
 	}()
 
 	let actionAttributes: [NSAttributedString.Key : Any] = {
-		let outputFont = UIFont.systemFont(ofSize: 15)
+		let outputFont = UIFont.CustomStyle.personActionFont
 		return [NSAttributedString.Key.font: outputFont, NSAttributedString.Key.foregroundColor: UIColor.gray]
 	}()
 
 	let objectAttributes: [NSAttributedString.Key : Any] = {
-		let outputFont = UIFont.systemFont(ofSize: 15)
+		let outputFont = UIFont.CustomStyle.objectFont
 		return [NSAttributedString.Key.font: outputFont, NSAttributedString.Key.foregroundColor: UIColor.orange]
 	}()
 

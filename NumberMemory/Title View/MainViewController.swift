@@ -22,6 +22,10 @@ class MainViewController: UITableViewController {
         super.viewDidLoad()
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MenuCell")
 		createPListIfNeeded()
+		for family in UIFont.familyNames.sorted() {
+			let names = UIFont.fontNames(forFamilyName: family)
+			print("Family: \(family) Font names: \(names)")
+		}
     }
 
     // MARK: - Table view data source
