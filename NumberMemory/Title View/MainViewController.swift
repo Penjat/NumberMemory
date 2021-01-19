@@ -72,5 +72,4 @@ class MainViewController: UITableViewController {
 		}
 		print("Location list found.")
 	}
-
 }

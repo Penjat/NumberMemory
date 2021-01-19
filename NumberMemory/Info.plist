@@ -60,6 +60,10 @@
 	<array>
 		<string>RobotoCondensed-Bold.ttf</string>
 		<string>Instruction.ttf</string>
+		<string>Instruction Bold.ttf</string>
+		<string>RobotoCondensed-Light.ttf</string>
+		<string>TYPEWR__.TTF</string>
+		<string>RobotoCondensed-Regular.ttf</string>
 	</array>
 </dict>
 </plist>
