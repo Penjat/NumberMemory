@@ -10,6 +10,14 @@
 		0B7CFBC6258BC52B007349C6 /* NumberLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7CFBC5258BC52B007349C6 /* NumberLocationCell.swift */; };
 		0B7CFBCA258CDAFF007349C6 /* PiString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7CFBC9258CDAFF007349C6 /* PiString.swift */; };
 		0B8703EC2570201E0008E0DA /* LocationNumberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8703EB2570201E0008E0DA /* LocationNumberData.swift */; };
+		0BA9871425B614BC0095FA09 /* UIFont+Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9871325B614BC0095FA09 /* UIFont+Fonts.swift */; };
+		0BA9871B25B61CBD0095FA09 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871525B61CBD0095FA09 /* RobotoCondensed-Bold.ttf */; };
+		0BA9871C25B61CBD0095FA09 /* Instruction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871625B61CBD0095FA09 /* Instruction.ttf */; };
+		0BA9871D25B61CBD0095FA09 /* Instruction Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871725B61CBD0095FA09 /* Instruction Bold.ttf */; };
+		0BA9871E25B61CBD0095FA09 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871825B61CBD0095FA09 /* RobotoCondensed-Regular.ttf */; };
+		0BA9871F25B61CBD0095FA09 /* RobotoCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */; };
+		0BA9872025B61CBD0095FA09 /* TYPEWR__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */; };
+		0BA9872325B6F55F0095FA09 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */; };
 		0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB7591B2590F84200F893A7 /* PListDataStore.swift */; };
 		0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */; };
 		0BCEC7AA25AF26FF00C1C418 /* DigitTesterConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */; };
@@ -38,6 +46,14 @@
 		0B7CFBC5258BC52B007349C6 /* NumberLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberLocationCell.swift; sourceTree = "<group>"; };
 		0B7CFBC9258CDAFF007349C6 /* PiString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiString.swift; sourceTree = "<group>"; };
 		0B8703EB2570201E0008E0DA /* LocationNumberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationNumberData.swift; sourceTree = "<group>"; };
+		0BA9871325B614BC0095FA09 /* UIFont+Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Fonts.swift"; sourceTree = "<group>"; };
+		0BA9871525B61CBD0095FA09 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		0BA9871625B61CBD0095FA09 /* Instruction.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Instruction.ttf; sourceTree = "<group>"; };
+		0BA9871725B61CBD0095FA09 /* Instruction Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Instruction Bold.ttf"; sourceTree = "<group>"; };
+		0BA9871825B61CBD0095FA09 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
+		0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Light.ttf"; sourceTree = "<group>"; };
+		0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = TYPEWR__.TTF; sourceTree = "<group>"; };
+		0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		0BB7591B2590F84200F893A7 /* PListDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataStore.swift; sourceTree = "<group>"; };
 		0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewController.swift; sourceTree = "<group>"; };
 		0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTesterConfigViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +90,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BA9870825B60C9A0095FA09 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0BA9871725B61CBD0095FA09 /* Instruction Bold.ttf */,
+				0BA9871625B61CBD0095FA09 /* Instruction.ttf */,
+				0BA9871525B61CBD0095FA09 /* RobotoCondensed-Bold.ttf */,
+				0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */,
+				0BA9871825B61CBD0095FA09 /* RobotoCondensed-Regular.ttf */,
+				0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		0BB7591D2591303800F893A7 /* PIChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +119,8 @@
 			children = (
 				0BB7591B2590F84200F893A7 /* PListDataStore.swift */,
 				0BF54A7D25632AA80064AD2E /* NumberTransformer.swift */,
+				0BA9871325B614BC0095FA09 /* UIFont+Fonts.swift */,
+				0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -150,6 +181,7 @@
 		0BF54A66256310740064AD2E /* NumberMemory */ = {
 			isa = PBXGroup;
 			children = (
+				0BA9870825B60C9A0095FA09 /* Fonts */,
 				0BB75920259130B100F893A7 /* App */,
 				0BB7591F2591307700F893A7 /* Basic Number Transformer */,
 				0BB75921259131CB00F893A7 /* Title View */,
@@ -252,6 +284,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BA9871E25B61CBD0095FA09 /* RobotoCondensed-Regular.ttf in Resources */,
+				0BA9872025B61CBD0095FA09 /* TYPEWR__.TTF in Resources */,
+				0BA9871B25B61CBD0095FA09 /* RobotoCondensed-Bold.ttf in Resources */,
+				0BA9871D25B61CBD0095FA09 /* Instruction Bold.ttf in Resources */,
+				0BA9871C25B61CBD0095FA09 /* Instruction.ttf in Resources */,
+				0BA9871F25B61CBD0095FA09 /* RobotoCondensed-Light.ttf in Resources */,
 				0BF54A74256310760064AD2E /* LaunchScreen.storyboard in Resources */,
 				0BF54A71256310760064AD2E /* Assets.xcassets in Resources */,
 			);
@@ -274,7 +312,9 @@
 				0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */,
 				0BF54A7C256311C30064AD2E /* BasicTransformerViewController.swift in Sources */,
 				0BF54A68256310740064AD2E /* AppDelegate.swift in Sources */,
+				0BA9872325B6F55F0095FA09 /* UIColor+Colors.swift in Sources */,
 				0B8703EC2570201E0008E0DA /* LocationNumberData.swift in Sources */,
+				0BA9871425B614BC0095FA09 /* UIFont+Fonts.swift in Sources */,
 				0BF54A7E25632AA80064AD2E /* NumberTransformer.swift in Sources */,
 				0BCEC7AA25AF26FF00C1C418 /* DigitTesterConfigViewController.swift in Sources */,
 				0B7CFBCA258CDAFF007349C6 /* PiString.swift in Sources */,

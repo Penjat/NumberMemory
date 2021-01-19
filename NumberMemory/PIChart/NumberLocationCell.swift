@@ -35,7 +35,7 @@ class NumberLocationCell: UITableViewCell {
 		let label = UILabel()
 		label.lineBreakMode = .byCharWrapping
 		label.numberOfLines = 0
-		label.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: .bold)
+		label.font = UIFont.CustomStyle.digitFont 
 		label.widthAnchor.constraint(equalToConstant: 50).isActive = true
 		return label
 	}()

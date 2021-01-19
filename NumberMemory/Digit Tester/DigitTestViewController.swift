@@ -34,7 +34,19 @@ class DigitTestViewController: UIViewController {
 		return label
 	}()
 
-	let keyStack: UIView = {
+	private func createKeypadKey(_ number: Int) -> UIView {
+		let button = UIButton()
+		button.backgroundColor = UIColor.CustomStyle.keypadKey
+		button.titleLabel?.font = UIFont.CustomStyle.keypad
+		let numberString = "\(number)"
+		button.tag = number
+		button.setTitle(numberString, for: .normal)
+		button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
+		button.layer.cornerRadius = 8.0
+		return button
+	}
+
+	lazy var keyStack: UIView = {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.distribution = .fillEqually
@@ -52,17 +64,12 @@ class DigitTestViewController: UIViewController {
 				if index == 9 || index == 11 {
 					horizontalStack.addArrangedSubview(UIView())
 				} else if index == 10 {
-					let button = UIButton()
-					button.backgroundColor = .red
-					let numberString = "\(0)"
-					button.tag = 0
-					button.setTitle(numberString, for: .normal)
-					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
-					button.layer.cornerRadius = 8.0
+					let button = createKeypadKey(0)
 					horizontalStack.addArrangedSubview(button)
 				} else {
 					let button = UIButton()
-					button.backgroundColor = .red
+					button.backgroundColor = UIColor.CustomStyle.keypadKey
+					button.titleLabel?.font = UIFont.CustomStyle.keypad
 					let numberString = "\(index+1)"
 					button.tag = index+1
 					button.setTitle(numberString, for: .normal)

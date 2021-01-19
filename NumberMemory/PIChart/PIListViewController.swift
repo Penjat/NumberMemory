@@ -79,7 +79,7 @@ class PIListViewController: UITableViewController {
 		areaSectionView.backgroundColor = UIColor.green
 		areaSectionView.textAlignment = .center
 		areaSectionView.text = locations?.areas[section].name
-		areaSectionView.font = .boldSystemFont(ofSize: 20)
+		areaSectionView.font = UIFont.CustomStyle.sectionTitle
 		areaSectionView.heightAnchor.constraint(equalToConstant: 65).isActive = true
 
 		return areaSectionView
