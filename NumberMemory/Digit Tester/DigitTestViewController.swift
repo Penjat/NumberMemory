@@ -67,14 +67,7 @@ class DigitTestViewController: UIViewController {
 					let button = createKeypadKey(0)
 					horizontalStack.addArrangedSubview(button)
 				} else {
-					let button = UIButton()
-					button.backgroundColor = UIColor.CustomStyle.keypadKey
-					button.titleLabel?.font = UIFont.CustomStyle.keypad
-					let numberString = "\(index+1)"
-					button.tag = index+1
-					button.setTitle(numberString, for: .normal)
-					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
-					button.layer.cornerRadius = 8.0
+					let button = createKeypadKey(index+1)
 					horizontalStack.addArrangedSubview(button)
 				}
 			}
@@ -117,13 +110,13 @@ class DigitTestViewController: UIViewController {
 
 	@objc func pressedKey(sender: UIButton) {
 		if "\(sender.tag)" == answer.dropFirst(answerIndex).prefix(1) {
-
-			print("answer is \(answer.dropFirst(answerIndex).prefix(1)) correct")
 			answerIndex += 1
 			answerLabel.text = "\(answerLabel.text ?? "") \(sender.tag)"
 			checkDone()
+			// Correct
+			return
 		}
-		print("answer is \(answer.prefix(1)) incorrect")
+		// Incorrect
 	}
 
 	func checkDone(){
