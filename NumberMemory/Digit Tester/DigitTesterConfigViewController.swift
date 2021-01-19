@@ -56,13 +56,12 @@ class DigitTesterConfigViewController: UIViewController {
     }
 
 	@objc public func startTest() {
-		self.navigationController?.pushViewController(DigitTestViewController(), animated: true)
+		let controller = DigitTestViewController()
+		controller.configuration = DigitTestConfiguration(numDigits: Int(digitStepper.value))
+		self.navigationController?.pushViewController(controller, animated: true)
 	}
 
 	@objc func digitStepperValueChanged(_ sender: UIStepper) {
-		guard let stepper = sender as? UIStepper else {
-			return
-		}
-		numberDigitsLabel.text = "\(Int(stepper.value))"
+		numberDigitsLabel.text = "\(Int(sender.value))"
 	}
 }

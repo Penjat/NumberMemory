@@ -1,6 +1,7 @@
 import UIKit
 
 class DigitTestViewController: UIViewController {
+	var configuration: DigitTestConfiguration?
 	let numberTransformer = NumberTransformer()
 	var answer = ""
 	var answerIndex = 0
@@ -99,7 +100,10 @@ class DigitTestViewController: UIViewController {
 
 
 	func generateNumber() {
-		let number = Int.random(in: 10000...19999)
+		let numDigits = configuration?.numDigits ?? 4
+		let minNumber = Int(pow(10.0, Double(numDigits)))
+		let maxNumber = Int(minNumber*2 - 1)
+		let number = Int.random(in: minNumber...maxNumber)
 		let numberString = "\(number)".dropFirst(1)
 
 		let numberPhrase = numberTransformer.transform(numberText: String(numberString)).string

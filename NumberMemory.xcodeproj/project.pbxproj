@@ -18,6 +18,7 @@
 		0BA9871F25B61CBD0095FA09 /* RobotoCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */; };
 		0BA9872025B61CBD0095FA09 /* TYPEWR__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */; };
 		0BA9872325B6F55F0095FA09 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */; };
+		0BA9872525B714300095FA09 /* DigitTestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */; };
 		0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB7591B2590F84200F893A7 /* PListDataStore.swift */; };
 		0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */; };
 		0BCEC7AA25AF26FF00C1C418 /* DigitTesterConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */; };
@@ -54,6 +55,7 @@
 		0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Light.ttf"; sourceTree = "<group>"; };
 		0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = TYPEWR__.TTF; sourceTree = "<group>"; };
 		0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
+		0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestConfiguration.swift; sourceTree = "<group>"; };
 		0BB7591B2590F84200F893A7 /* PListDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataStore.swift; sourceTree = "<group>"; };
 		0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewController.swift; sourceTree = "<group>"; };
 		0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTesterConfigViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */,
 				0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */,
+				0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */,
 			);
 			path = "Digit Tester";
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */,
 				0B7CFBC6258BC52B007349C6 /* NumberLocationCell.swift in Sources */,
 				0BF54A912565BEED0064AD2E /* MainViewController.swift in Sources */,
+				0BA9872525B714300095FA09 /* DigitTestConfiguration.swift in Sources */,
 				0BF54A932565D0710064AD2E /* PIListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
