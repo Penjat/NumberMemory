@@ -53,7 +53,8 @@ class DigitTestViewController: UIViewController {
 					horizontalStack.addArrangedSubview(UIView())
 				} else if index == 10 {
 					let button = UIButton()
-					button.backgroundColor = .red
+					button.backgroundColor = UIColor.CustomStyle.keypadKey
+					button.titleLabel?.font = UIFont.CustomStyle.keypad
 					let numberString = "\(0)"
 					button.tag = 0
 					button.setTitle(numberString, for: .normal)
@@ -62,7 +63,8 @@ class DigitTestViewController: UIViewController {
 					horizontalStack.addArrangedSubview(button)
 				} else {
 					let button = UIButton()
-					button.backgroundColor = .red
+					button.backgroundColor = UIColor.CustomStyle.keypadKey
+					button.titleLabel?.font = UIFont.CustomStyle.keypad
 					let numberString = "\(index+1)"
 					button.tag = index+1
 					button.setTitle(numberString, for: .normal)
