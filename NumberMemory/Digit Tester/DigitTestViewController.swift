@@ -1,6 +1,7 @@
 import UIKit
 
 class DigitTestViewController: UIViewController {
+	var configuration: DigitTestConfiguration?
 	let numberTransformer = NumberTransformer()
 	var answer = ""
 	var answerIndex = 0
@@ -67,14 +68,7 @@ class DigitTestViewController: UIViewController {
 					let button = createKeypadKey(0)
 					horizontalStack.addArrangedSubview(button)
 				} else {
-					let button = UIButton()
-					button.backgroundColor = UIColor.CustomStyle.keypadKey
-					button.titleLabel?.font = UIFont.CustomStyle.keypad
-					let numberString = "\(index+1)"
-					button.tag = index+1
-					button.setTitle(numberString, for: .normal)
-					button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
-					button.layer.cornerRadius = 8.0
+					let button = createKeypadKey(index+1)
 					horizontalStack.addArrangedSubview(button)
 				}
 			}
@@ -106,7 +100,10 @@ class DigitTestViewController: UIViewController {
 
 
 	func generateNumber() {
-		let number = Int.random(in: 10000...19999)
+		let numDigits = configuration?.numDigits ?? 4
+		let minNumber = Int(pow(10.0, Double(numDigits)))
+		let maxNumber = Int(minNumber*2 - 1)
+		let number = Int.random(in: minNumber...maxNumber)
 		let numberString = "\(number)".dropFirst(1)
 
 		let numberPhrase = numberTransformer.transform(numberText: String(numberString)).string
@@ -117,13 +114,13 @@ class DigitTestViewController: UIViewController {
 
 	@objc func pressedKey(sender: UIButton) {
 		if "\(sender.tag)" == answer.dropFirst(answerIndex).prefix(1) {
-
-			print("answer is \(answer.dropFirst(answerIndex).prefix(1)) correct")
 			answerIndex += 1
 			answerLabel.text = "\(answerLabel.text ?? "") \(sender.tag)"
 			checkDone()
+			// Correct
+			return
 		}
-		print("answer is \(answer.prefix(1)) incorrect")
+		// Incorrect
 	}
 
 	func checkDone(){
