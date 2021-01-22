@@ -52,7 +52,8 @@ class MainViewController: UITableViewController {
 		}
 		switch mode {
 		case .NUMBER_TRANSFORMER:
-			self.navigationController?.pushViewController(BasicTransformerViewController(), animated: true)
+			let viewModel = BasicTransformerViewModel()
+			self.navigationController?.pushViewController(BasicTransformerViewController(viewModel: viewModel), animated: true)
 		case .PI_CHART:
 			self.navigationController?.pushViewController(PIListViewController(), animated: true)
 		case .DIGIT_TESTER:

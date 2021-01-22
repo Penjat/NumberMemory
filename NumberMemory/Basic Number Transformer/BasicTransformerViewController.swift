@@ -1,14 +1,32 @@
 import UIKit
+import RxSwift
+import RxCocoa
 
 class BasicTransformerViewController: UIViewController {
-	let transformer = NumberTransformer()
+	let disposeBag = DisposeBag()
+	var viewModel: BasicTransformerViewModel
+	private let inputText: PublishSubject<BasicTransformerViewIntent> = .init()
+
+	init(viewModel: BasicTransformerViewModel) {
+		self.viewModel = viewModel
+		super.init(nibName: nil, bundle: nil)
+		viewModel.viewState.subscribe(onNext: { viewState in
+			self.outputText.text = viewState.phraseText
+		}).disposed(by: disposeBag)
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		view.backgroundColor = .systemPink
-
 		setUpViews()
 		numberInputField.becomeFirstResponder()
+		numberInputField.rx.controlEvent(.editingChanged).withLatestFrom(numberInputField.rx.text.orEmpty).subscribe(onNext: { text in
+			self.viewModel.processIntent(intent: .inputText(text))
+		}).disposed(by: disposeBag)
     }
 
 	private func setUpViews(){
@@ -18,15 +36,15 @@ class BasicTransformerViewController: UIViewController {
 		mainStack.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
 		mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
 		mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-
-		numberInputField.delegate = self
 		mainStack.addArrangedSubview(numberInputField)
 		mainStack.addArrangedSubview(outputText)
+
+
 	}
 
 	lazy var outputText: UILabel = {
 		let label = UILabel()
-		label.text = ""
+		label.text = "____"
 		label.numberOfLines = 0
 		return label
 	}()
@@ -47,20 +65,4 @@ class BasicTransformerViewController: UIViewController {
 		stackView.alignment = .center
 		return	stackView
 	}()
-}
-
-extension BasicTransformerViewController: UITextFieldDelegate {
-	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-		if let inputText = numberInputField.text {
-			if let char = string.cString(using: String.Encoding.utf8) {
-				let isBackSpace = strcmp(char, "\\b")
-				if (isBackSpace == -92) {
-					outputText.attributedText = transformer.transform(numberText: String(inputText.dropLast()))
-				} else {
-					outputText.attributedText = transformer.transform(numberText: inputText + String(string) )
-				}
-			}
-		}
-		  return true
-	}
 }
