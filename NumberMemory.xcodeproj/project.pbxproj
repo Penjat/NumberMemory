@@ -26,6 +26,7 @@
 		0BA9873F25BA4EBA0095FA09 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873625B87F720095FA09 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0BA9874025BA4F280095FA09 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873325B87F6E0095FA09 /* RxRelay.framework */; };
 		0BA9874125BA4F280095FA09 /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873325B87F6E0095FA09 /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0BA9874325BA5A420095FA09 /* DigitTestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */; };
 		0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB7591B2590F84200F893A7 /* PListDataStore.swift */; };
 		0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */; };
 		0BCEC7AA25AF26FF00C1C418 /* DigitTesterConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */; };
@@ -90,6 +91,7 @@
 		0BA9873625B87F720095FA09 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		0BA9873925B87F780095FA09 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		0BA9873C25B880800095FA09 /* BasicTransformerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTransformerViewModel.swift; sourceTree = "<group>"; };
+		0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewModel.swift; sourceTree = "<group>"; };
 		0BB7591B2590F84200F893A7 /* PListDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataStore.swift; sourceTree = "<group>"; };
 		0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewController.swift; sourceTree = "<group>"; };
 		0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTesterConfigViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */,
+				0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */,
 				0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */,
 				0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */,
 			);
@@ -384,6 +387,7 @@
 				0B7CFBC6258BC52B007349C6 /* NumberLocationCell.swift in Sources */,
 				0BF54A912565BEED0064AD2E /* MainViewController.swift in Sources */,
 				0BA9872525B714300095FA09 /* DigitTestConfiguration.swift in Sources */,
+				0BA9874325BA5A420095FA09 /* DigitTestViewModel.swift in Sources */,
 				0BF54A932565D0710064AD2E /* PIListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

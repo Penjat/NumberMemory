@@ -1,10 +1,27 @@
 import UIKit
+import RxSwift
 
 class DigitTestViewController: UIViewController {
+	let disposeBag = DisposeBag()
+	let viewModel: DigitTestViewModel
 	var configuration: DigitTestConfiguration?
 	let numberTransformer = NumberTransformer()
 	var answer = ""
 	var answerIndex = 0
+
+	//MARK: Init
+
+	init(viewModel: DigitTestViewModel) {
+		self.viewModel = viewModel
+		super.init(nibName: nil, bundle: nil)
+		viewModel.viewState.subscribe(onNext: { viewState in
+//			self.outputText.text = viewState.phraseText
+		}).disposed(by: disposeBag)
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	//MARK: Views
 
@@ -113,6 +130,7 @@ class DigitTestViewController: UIViewController {
 	}
 
 	@objc func pressedKey(sender: UIButton) {
+		
 		if "\(sender.tag)" == answer.dropFirst(answerIndex).prefix(1) {
 			answerIndex += 1
 			answerLabel.text = "\(answerLabel.text ?? "") \(sender.tag)"
