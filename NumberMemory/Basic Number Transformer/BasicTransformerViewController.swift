@@ -44,7 +44,7 @@ class BasicTransformerViewController: UIViewController {
 
 	lazy var outputText: UILabel = {
 		let label = UILabel()
-		label.text = ""
+		label.text = "____"
 		label.numberOfLines = 0
 		return label
 	}()

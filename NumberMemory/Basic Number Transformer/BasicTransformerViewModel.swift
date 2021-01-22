@@ -29,7 +29,6 @@ class BasicTransformerViewModel {
 		return intents.flatMap { intent -> Observable<BasicTransformerViewResult> in
 			switch intent {
 			case .inputText(let text):
-				print("text is \(text)")
 				let phrase = self.transformer.transform(numberText: text).string
 				return Observable<BasicTransformerViewResult>.just(.showPhrase(phrase))
 			}
