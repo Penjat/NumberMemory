@@ -19,7 +19,10 @@ class NumberTransformer {
 	}()
 
 	func transform(numberText: String) -> NSAttributedString {
+		print("count is: \(numberText)")
 		switch numberText.count {
+		case 0:
+			return NSAttributedString()
 		case 1:
 			let index = Int(numberText) ?? 0
 			return NSAttributedString(string: objects[index], attributes: objectAttributes)
