@@ -4,8 +4,7 @@ import RxSwift
 class DigitTestViewController: UIViewController {
 	let disposeBag = DisposeBag()
 	let viewModel: DigitTestViewModel
-	var configuration: DigitTestConfiguration?
-	let numberTransformer = NumberTransformer()
+	
 	var answer = ""
 	var answerIndex = 0
 
@@ -15,8 +14,9 @@ class DigitTestViewController: UIViewController {
 		self.viewModel = viewModel
 		super.init(nibName: nil, bundle: nil)
 		viewModel.viewState.subscribe(onNext: { viewState in
-//			self.outputText.text = viewState.phraseText
+			self.phraseLabel.text = viewState.questionText
 		}).disposed(by: disposeBag)
+		
 	}
 
 	required init?(coder: NSCoder) {
@@ -111,41 +111,10 @@ class DigitTestViewController: UIViewController {
 
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
-
-		generateNumber()
+		viewModel.processIntent(intent: .startTest)
     }
 
-
-	func generateNumber() {
-		let numDigits = configuration?.numDigits ?? 4
-		let minNumber = Int(pow(10.0, Double(numDigits)))
-		let maxNumber = Int(minNumber*2 - 1)
-		let number = Int.random(in: minNumber...maxNumber)
-		let numberString = "\(number)".dropFirst(1)
-
-		let numberPhrase = numberTransformer.transform(numberText: String(numberString)).string
-		answer = "\(numberString)"
-		phraseLabel.text = numberPhrase
-		answerLabel.text = ""
-	}
-
 	@objc func pressedKey(sender: UIButton) {
-		
-		if "\(sender.tag)" == answer.dropFirst(answerIndex).prefix(1) {
-			answerIndex += 1
-			answerLabel.text = "\(answerLabel.text ?? "") \(sender.tag)"
-			checkDone()
-			// Correct
-			return
-		}
-		// Incorrect
-	}
-
-	func checkDone(){
-		if answerIndex == answer.count {
-			print("done")
-			answerIndex = 0
-			generateNumber()
-		}
+		viewModel.processIntent(intent: .enterNumber(sender.tag))
 	}
 }
