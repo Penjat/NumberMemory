@@ -27,6 +27,7 @@
 		0BA9874025BA4F280095FA09 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873325B87F6E0095FA09 /* RxRelay.framework */; };
 		0BA9874125BA4F280095FA09 /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873325B87F6E0095FA09 /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0BA9874325BA5A420095FA09 /* DigitTestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */; };
+		0BA99A3B25BF48A70018188B /* DigitTestAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA99A3A25BF48A70018188B /* DigitTestAnswer.swift */; };
 		0BAB817425BB76E800B9921A /* DIgitTestQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB817325BB76E800B9921A /* DIgitTestQuestion.swift */; };
 		0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB7591B2590F84200F893A7 /* PListDataStore.swift */; };
 		0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */; };
@@ -93,6 +94,7 @@
 		0BA9873925B87F780095FA09 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		0BA9873C25B880800095FA09 /* BasicTransformerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTransformerViewModel.swift; sourceTree = "<group>"; };
 		0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewModel.swift; sourceTree = "<group>"; };
+		0BA99A3A25BF48A70018188B /* DigitTestAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestAnswer.swift; sourceTree = "<group>"; };
 		0BAB817325BB76E800B9921A /* DIgitTestQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIgitTestQuestion.swift; sourceTree = "<group>"; };
 		0BB7591B2590F84200F893A7 /* PListDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataStore.swift; sourceTree = "<group>"; };
 		0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				0BA9872425B714300095FA09 /* DigitTest.swift */,
 				0BAB817325BB76E800B9921A /* DIgitTestQuestion.swift */,
+				0BA99A3A25BF48A70018188B /* DigitTestAnswer.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -186,6 +189,14 @@
 				0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0BA99A5C25C0B38E0018188B /* NumberTransformer */ = {
+			isa = PBXGroup;
+			children = (
+				0BF54A7D25632AA80064AD2E /* NumberTransformer.swift */,
+			);
+			path = NumberTransformer;
 			sourceTree = "<group>";
 		};
 		0BB7591D2591303800F893A7 /* PIChart */ = {
@@ -203,7 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				0BB7591B2590F84200F893A7 /* PListDataStore.swift */,
-				0BF54A7D25632AA80064AD2E /* NumberTransformer.swift */,
+				0BA99A5C25C0B38E0018188B /* NumberTransformer */,
 				0BA9871325B614BC0095FA09 /* UIFont+Fonts.swift */,
 				0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */,
 			);
@@ -401,6 +412,7 @@
 			files = (
 				0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */,
 				0BAB817425BB76E800B9921A /* DIgitTestQuestion.swift in Sources */,
+				0BA99A3B25BF48A70018188B /* DigitTestAnswer.swift in Sources */,
 				0BF54A7C256311C30064AD2E /* BasicTransformerViewController.swift in Sources */,
 				0BF54A68256310740064AD2E /* AppDelegate.swift in Sources */,
 				0BA9872325B6F55F0095FA09 /* UIColor+Colors.swift in Sources */,

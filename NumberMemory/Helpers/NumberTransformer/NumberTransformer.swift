@@ -1,6 +1,21 @@
 import Foundation
 import UIKit
 
+struct PhrasedNumber {
+	let digits: [Int]
+	let phrases: [String]
+	var phraseString: String {
+		String(phrases.reduce("", {$0 + " " + $1}).dropFirst())
+	}
+}
+
+struct DigitNumber {
+	let digits: [Int]
+
+	var numberValue: Int {
+		digits.reduce(0,{ $0 * 10 + $1 })
+	}
+}
 
 class NumberTransformer {
 	let personAttributes: [NSAttributedString.Key : Any] = {
@@ -53,6 +68,34 @@ class NumberTransformer {
 			output.append(transform(numberText: String(numberText.dropFirst(4))))
 			output.append(NSAttributedString(string:"\n"))
 			return  output
+		}
+	}
+
+	func transform(number: DigitNumber) -> PhrasedNumber {
+		switch number.digits.count {
+		case 0:
+			return PhrasedNumber(digits: number.digits, phrases: [])
+		case 1:
+			let index = number.numberValue
+			return PhrasedNumber(digits: number.digits, phrases: [objects[index]])
+		case 2:
+			let index = number.numberValue
+//
+			return PhrasedNumber(digits: number.digits, phrases: [people[index]])
+		case 3:
+			let personIndex = number.digits[..<2].reduce(0,  {$0 * 10 + $1 })
+			let objectIndex = number.digits[2]
+			return PhrasedNumber(digits: number.digits, phrases: [people[personIndex],objects[objectIndex]])
+		case 4:
+			let personIndex = number.digits[..<2].reduce(0,  {$0 * 10 + $1 })
+			let actionIndex = number.digits[2...].reduce(0,  {$0 * 10 + $1 })
+			return PhrasedNumber(digits: number.digits, phrases: [people[personIndex],actions[actionIndex]])
+		default:
+			let digits1 = Array(number.digits[..<4])
+			let digits2 = Array(number.digits[4...])
+
+
+			return PhrasedNumber(digits: number.digits, phrases: transform(number: DigitNumber(digits: digits1 )).phrases + transform(number: DigitNumber(digits: digits2 )).phrases)
 		}
 	}
 	func toPerson(from number: Int ) -> String {

@@ -8,7 +8,8 @@ enum DigitTestViewIntent {
 
 enum DigitTestViewResult {
 	case askQuestion(DigitTestQuestion)
-	case correct
+	case correctDigit
+	case correctPhrase
 	case incorrect
 }
 
@@ -21,49 +22,63 @@ struct DigitTestViewState {
 
 class DigitTestViewModel {
 	private let intentSubject: PublishSubject<DigitTestViewIntent> = .init()
-	private lazy var results: Observable<DigitTestViewResult> = { intentToResult(intents: intentSubject, questions: questions).share() } ()
+	private lazy var results: Observable<DigitTestViewResult> = { intentToResult(intents: intentSubject).share()} ()
 	public lazy var viewState: Observable<DigitTestViewState> = {
 		results.resultsToViewState()
 	}()
 
 	private let digitTest: DigitTest
-	public let questions: PublishSubject<DigitTestQuestion> = .init()
+
+	private var questions: [DigitTestQuestion] = []
+	private var responses: [DigitTesResponse] = []
+
+	private var expectingDigits: [Int] = []
+
 	private let numberTransformer: NumberTransformer
 
 	init(digitTest: DigitTest, transformer: NumberTransformer) {
 		self.digitTest = digitTest
 		self.numberTransformer = transformer
-		
 	}
 
 	public func processIntent(intent:DigitTestViewIntent){
 		intentSubject.onNext(intent)
 	}
 
-	private func intentToResult(intents: Observable<DigitTestViewIntent>, questions: Observable<DigitTestQuestion>) -> Observable<DigitTestViewResult> {
+	private func intentToResult(intents: Observable<DigitTestViewIntent>) -> Observable<DigitTestViewResult> {
 		return intents.flatMap { intent -> Observable<DigitTestViewResult> in
 			switch intent {
 			case .startTest:
 				print("Starting Test.")
-				let question = DigitTestQuestion(answer: [], phrase: "hi")
-				self.questions.onNext(question)
+				let question = self.generateQuestion(numDigits: 4)
+				self.expectingDigits = question.answer.reversed()
 				return Observable<DigitTestViewResult>.just(.askQuestion(question))
 			case .enterNumber(let number):
 				print("entered number: \(number)")
-				let result = self.checkQuestion()
-
-				return result
+				guard let expecting = self.expectingDigits.last else {
+					return Observable<DigitTestViewResult>.empty()
+				}
+				if number == expecting {
+					self.expectingDigits.popLast()
+					if self.expectingDigits.isEmpty {
+						let question = self.generateQuestion(numDigits: 4)
+						self.expectingDigits = question.answer.reversed()
+						return Observable.from([Observable<DigitTestViewResult>.just(.correctPhrase),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.seconds(2), scheduler: MainScheduler.instance)]).concat()
+					}
+					return Observable<DigitTestViewResult>.just(.correctDigit)
+				}
+				return Observable<DigitTestViewResult>.just(.incorrect)
 			}
 		}
 	}
 
-	private func checkQuestion() -> Observable<DigitTestViewResult>{
-		print("checking...")
-		return questions.takeLast(1).flatMap {_ -> Observable<DigitTestViewResult> in
-			print("this was called")
-			return Observable<DigitTestViewResult>.just(.correct) }
+	private func generateQuestion(numDigits: Int) -> DigitTestQuestion {
+		var digits: [Int] = []
+		for _ in 0..<numDigits {
+			digits.append(Int.random(in: 0...9))
+		}
 
-
+		return DigitTestQuestion(answer: digits, phrase: numberTransformer.transform(number: DigitNumber(digits: digits)).phraseString)
 	}
 }
 
@@ -74,22 +89,21 @@ private extension Observable where Element == DigitTestViewResult {
 		return	scan(initialState) { prevState, result in
 			switch result {
 
-			case .correct:
+			case .correctDigit:
 				return DigitTestViewState(questionText: "correct")
-				break
+
 			case .incorrect:
-				break
+				print("incorrect")
+				return DigitTestViewState(questionText: "inncorrect")
 			case .askQuestion(let question):
 				return DigitTestViewState(questionText: question.phrase)
+			case .correctPhrase:
+				return DigitTestViewState(questionText: "phrase comple")
 			}
 
 			return DigitTestViewState(questionText: "")
 		}
 	}
-
-	private func generateQuestion(numDigits: Int) -> DigitTestQuestion {
-		var digits: [Int]
-
-		return DigitTestQuestion(answer: [5], phrase: "this is a sample answer")
-	}
 }
+
+

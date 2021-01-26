@@ -16,7 +16,7 @@ class DigitTestViewController: UIViewController {
 		viewModel.viewState.subscribe(onNext: { viewState in
 			self.phraseLabel.text = viewState.questionText
 		}).disposed(by: disposeBag)
-		
+
 	}
 
 	required init?(coder: NSCoder) {
