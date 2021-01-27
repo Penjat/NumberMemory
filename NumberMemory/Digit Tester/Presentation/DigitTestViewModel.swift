@@ -64,7 +64,7 @@ class DigitTestViewModel {
 
 			case .startTest:
 				print("Starting Test.")
-				let question = self.generateQuestion(numDigits: 4)
+				let question = self.generateQuestion(numDigits: self.digitTest.numDigits)
 				self.expectingDigits = question.answer.reversed()
 				return Observable<DigitTestViewResult>.just(.askQuestion(question))
 
@@ -76,7 +76,7 @@ class DigitTestViewModel {
 				if number == expecting {
 					self.expectingDigits.removeLast()
 					if self.expectingDigits.isEmpty {
-						let question = self.generateQuestion(numDigits: 4)
+						let question = self.generateQuestion(numDigits: self.digitTest.numDigits)
 						self.expectingDigits = question.answer.reversed()
 						return Observable.from([Observable<DigitTestViewResult>.just(.correctPhrase(expecting)),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.milliseconds(Constants.quesionDelay), scheduler: MainScheduler.instance)]).concat()
 					}
