@@ -61,8 +61,9 @@ class DigitTesterConfigViewController: UIViewController {
     }
 
 	@objc public func startTest() {
-		let controller = DigitTestViewController()
-		controller.configuration = DigitTestConfiguration(numDigits: Int(digitStepper.value))
+		let digitTest = DigitTest(numDigits: Int(digitStepper.value))
+		let viewModel = DigitTestViewModel(digitTest: digitTest, transformer: NumberTransformer())
+		let controller = DigitTestViewController(viewModel: viewModel)
 		self.navigationController?.pushViewController(controller, animated: true)
 	}
 

@@ -18,7 +18,7 @@
 		0BA9871F25B61CBD0095FA09 /* RobotoCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */; };
 		0BA9872025B61CBD0095FA09 /* TYPEWR__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */; };
 		0BA9872325B6F55F0095FA09 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */; };
-		0BA9872525B714300095FA09 /* DigitTestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */; };
+		0BA9872525B714300095FA09 /* DigitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9872425B714300095FA09 /* DigitTest.swift */; };
 		0BA9873125B87F6B0095FA09 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873025B87F6B0095FA09 /* RxSwift.framework */; };
 		0BA9873225B87F6B0095FA09 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873025B87F6B0095FA09 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0BA9873D25B880800095FA09 /* BasicTransformerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9873C25B880800095FA09 /* BasicTransformerViewModel.swift */; };
@@ -26,6 +26,9 @@
 		0BA9873F25BA4EBA0095FA09 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873625B87F720095FA09 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0BA9874025BA4F280095FA09 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873325B87F6E0095FA09 /* RxRelay.framework */; };
 		0BA9874125BA4F280095FA09 /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA9873325B87F6E0095FA09 /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0BA9874325BA5A420095FA09 /* DigitTestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */; };
+		0BA99A3B25BF48A70018188B /* DigitTestAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA99A3A25BF48A70018188B /* DigitTestAnswer.swift */; };
+		0BAB817425BB76E800B9921A /* DIgitTestQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB817325BB76E800B9921A /* DIgitTestQuestion.swift */; };
 		0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB7591B2590F84200F893A7 /* PListDataStore.swift */; };
 		0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */; };
 		0BCEC7AA25AF26FF00C1C418 /* DigitTesterConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */; };
@@ -78,7 +81,7 @@
 		0BA9871925B61CBD0095FA09 /* RobotoCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Light.ttf"; sourceTree = "<group>"; };
 		0BA9871A25B61CBD0095FA09 /* TYPEWR__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = TYPEWR__.TTF; sourceTree = "<group>"; };
 		0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
-		0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestConfiguration.swift; sourceTree = "<group>"; };
+		0BA9872425B714300095FA09 /* DigitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTest.swift; sourceTree = "<group>"; };
 		0BA9872725B87F1C0095FA09 /* RxTest.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxTest.framework.dSYM; path = Carthage/Build/iOS/RxTest.framework.dSYM; sourceTree = "<group>"; };
 		0BA9872825B87F1C0095FA09 /* RxBlocking.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxBlocking.framework.dSYM; path = Carthage/Build/iOS/RxBlocking.framework.dSYM; sourceTree = "<group>"; };
 		0BA9872925B87F1C0095FA09 /* RxRelay.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxRelay.framework.dSYM; path = Carthage/Build/iOS/RxRelay.framework.dSYM; sourceTree = "<group>"; };
@@ -90,6 +93,9 @@
 		0BA9873625B87F720095FA09 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		0BA9873925B87F780095FA09 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		0BA9873C25B880800095FA09 /* BasicTransformerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTransformerViewModel.swift; sourceTree = "<group>"; };
+		0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewModel.swift; sourceTree = "<group>"; };
+		0BA99A3A25BF48A70018188B /* DigitTestAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestAnswer.swift; sourceTree = "<group>"; };
+		0BAB817325BB76E800B9921A /* DIgitTestQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIgitTestQuestion.swift; sourceTree = "<group>"; };
 		0BB7591B2590F84200F893A7 /* PListDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataStore.swift; sourceTree = "<group>"; };
 		0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTestViewController.swift; sourceTree = "<group>"; };
 		0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitTesterConfigViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +165,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0BA9874425BB59410095FA09 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				0BA9874225BA5A420095FA09 /* DigitTestViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		0BA9874525BB594B0095FA09 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				0BA9872425B714300095FA09 /* DigitTest.swift */,
+				0BAB817325BB76E800B9921A /* DIgitTestQuestion.swift */,
+				0BA99A3A25BF48A70018188B /* DigitTestAnswer.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		0BA9874625BB59540095FA09 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */,
+				0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0BA99A5C25C0B38E0018188B /* NumberTransformer */ = {
+			isa = PBXGroup;
+			children = (
+				0BF54A7D25632AA80064AD2E /* NumberTransformer.swift */,
+			);
+			path = NumberTransformer;
+			sourceTree = "<group>";
+		};
 		0BB7591D2591303800F893A7 /* PIChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,7 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				0BB7591B2590F84200F893A7 /* PListDataStore.swift */,
-				0BF54A7D25632AA80064AD2E /* NumberTransformer.swift */,
+				0BA99A5C25C0B38E0018188B /* NumberTransformer */,
 				0BA9871325B614BC0095FA09 /* UIFont+Fonts.swift */,
 				0BA9872225B6F55F0095FA09 /* UIColor+Colors.swift */,
 			);
@@ -211,9 +252,9 @@
 		0BCEC7A625AF241C00C1C418 /* Digit Tester */ = {
 			isa = PBXGroup;
 			children = (
-				0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */,
-				0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */,
-				0BA9872425B714300095FA09 /* DigitTestConfiguration.swift */,
+				0BA9874525BB594B0095FA09 /* Domain */,
+				0BA9874425BB59410095FA09 /* Presentation */,
+				0BA9874625BB59540095FA09 /* View */,
 			);
 			path = "Digit Tester";
 			sourceTree = "<group>";
@@ -370,6 +411,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BCEC7A825AF257900C1C418 /* DigitTestViewController.swift in Sources */,
+				0BAB817425BB76E800B9921A /* DIgitTestQuestion.swift in Sources */,
+				0BA99A3B25BF48A70018188B /* DigitTestAnswer.swift in Sources */,
 				0BF54A7C256311C30064AD2E /* BasicTransformerViewController.swift in Sources */,
 				0BF54A68256310740064AD2E /* AppDelegate.swift in Sources */,
 				0BA9872325B6F55F0095FA09 /* UIColor+Colors.swift in Sources */,
@@ -383,7 +426,8 @@
 				0BA9873D25B880800095FA09 /* BasicTransformerViewModel.swift in Sources */,
 				0B7CFBC6258BC52B007349C6 /* NumberLocationCell.swift in Sources */,
 				0BF54A912565BEED0064AD2E /* MainViewController.swift in Sources */,
-				0BA9872525B714300095FA09 /* DigitTestConfiguration.swift in Sources */,
+				0BA9872525B714300095FA09 /* DigitTest.swift in Sources */,
+				0BA9874325BA5A420095FA09 /* DigitTestViewModel.swift in Sources */,
 				0BF54A932565D0710064AD2E /* PIListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

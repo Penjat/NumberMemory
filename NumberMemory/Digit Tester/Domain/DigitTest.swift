@@ -1,5 +1,5 @@
 import Foundation
 
-struct DigitTestConfiguration {
+struct DigitTest {
 	let numDigits: Int
 }
