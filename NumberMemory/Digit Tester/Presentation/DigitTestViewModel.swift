@@ -9,12 +9,14 @@ enum DigitTestViewIntent {
 enum DigitTestViewResult {
 	case askQuestion(DigitTestQuestion)
 	case correctDigit(Int)
-	case correctPhrase
+	case correctPhrase(Int)
 	case incorrect
 }
 
 enum DigitTestViewEffect {
 	case showMessage(String)
+	case phraseComplete
+	case showPhrase
 }
 
 struct DigitTestViewState {
@@ -26,6 +28,9 @@ struct DigitTestViewState {
 }
 
 class DigitTestViewModel {
+	private enum Constants {
+		static let quesionDelay = 1300
+	}
 	private let intentSubject: PublishSubject<DigitTestViewIntent> = .init()
 	private lazy var results: Observable<DigitTestViewResult> = { intentToResult(intents: intentSubject).share()} ()
 	public lazy var viewState: Observable<DigitTestViewState> = {
@@ -73,7 +78,7 @@ class DigitTestViewModel {
 					if self.expectingDigits.isEmpty {
 						let question = self.generateQuestion(numDigits: 4)
 						self.expectingDigits = question.answer.reversed()
-						return Observable.from([Observable<DigitTestViewResult>.just(.correctPhrase),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.seconds(2), scheduler: MainScheduler.instance)]).concat()
+						return Observable.from([Observable<DigitTestViewResult>.just(.correctPhrase(expecting)),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.milliseconds(Constants.quesionDelay), scheduler: MainScheduler.instance)]).concat()
 					}
 					return Observable<DigitTestViewResult>.just(.correctDigit(expecting))
 				}
@@ -110,10 +115,10 @@ private extension Observable where Element == DigitTestViewResult {
 				return DigitTestViewState(
 					questionText: question.phrase,
 					correctDigits: "")
-			case .correctPhrase:
+			case .correctPhrase(let digit):
 				return DigitTestViewState(
-					questionText: "",
-					correctDigits: "")
+				questionText: prevState.questionText,
+				correctDigits: prevState.correctDigits + "\(digit)")
 			}
 		}
 	}
@@ -128,12 +133,10 @@ private extension Observable where Element == DigitTestViewResult {
 				print("incorrect")
 				return .showMessage("inncorrect")
 			case .askQuestion:
-				return .showMessage("")
+				return .showPhrase
 			case .correctPhrase:
-				return .showMessage("")
+				return .phraseComplete
 			}
 		}
 	}
 }
-
-

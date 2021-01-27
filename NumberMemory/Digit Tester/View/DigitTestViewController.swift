@@ -16,6 +16,10 @@ class DigitTestViewController: UIViewController {
 		viewModel.viewState.subscribe(onNext: { viewState in
 			self.phraseLabel.text = viewState.questionText
 			self.answerLabel.text =  viewState.correctDigits
+			self.phraseLabel.alpha = 1
+			self.answerLabel.alpha = 1
+			self.phraseLabel.transform = .identity
+			self.answerLabel.transform = .identity
 		}).disposed(by: disposeBag)
 
 		viewModel.viewEffects.subscribe(onNext: { viewEffect in
@@ -50,7 +54,6 @@ class DigitTestViewController: UIViewController {
 
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
-
 	}
 
 	//MARK: Views
@@ -87,6 +90,7 @@ class DigitTestViewController: UIViewController {
 		label.text = ""
 		label.textAlignment = .center
 		label.font = UIFont.CustomStyle.feedbackFont
+		label.textColor = .white
 		return label
 	}()
 
@@ -131,7 +135,6 @@ class DigitTestViewController: UIViewController {
 		return stack
 	}()
 
-
 	@objc func pressedKey(sender: UIButton) {
 		viewModel.processIntent(intent: .enterNumber(sender.tag))
 	}
@@ -146,8 +149,28 @@ class DigitTestViewController: UIViewController {
 				self.feedbackLabel.alpha = 0
 				self.feedbackLabel.transform = CGAffineTransform.init(translationX: 0.0, y: 0.0)
 			})
+		case .phraseComplete:
+			UIView.animate(withDuration: 1.3, animations: {
+				self.phraseLabel.transform = CGAffineTransform.init(translationX: 0, y: 30).scaledBy(x: 2.0, y: 2.0)
+				self.phraseLabel.alpha = 0
 
+				self.answerLabel.transform = CGAffineTransform.init(translationX: 0, y: -100).scaledBy(x: 2.4, y: 2.4)
+				self.answerLabel.alpha = 0
+			})
+		case .showPhrase:
+			phraseLabel.transform = CGAffineTransform.init(translationX: 0, y: 30).scaledBy(x: 2.0, y: 2.0)
+			phraseLabel.alpha = 0
 
+			answerLabel.transform = .identity
+			answerLabel.alpha = 0
+
+			UIView.animate(withDuration: 0.8, animations: {
+				self.phraseLabel.transform = .identity
+				self.phraseLabel.alpha = 1
+
+				self.answerLabel.transform = CGAffineTransform.init(translationX: 0, y: -100).scaledBy(x: 2.4, y: 2.4)
+				self.answerLabel.alpha = 0
+			})
 		}
 	}
 }
