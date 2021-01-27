@@ -1,6 +1,6 @@
 import Foundation
 
-struct DigitTesResponse {
+struct DigitTestResponse {
 	let givinDigit: Int
 	let actualDigit: Int
 	let questionNumber: Int

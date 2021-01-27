@@ -38,7 +38,7 @@ class DigitTestViewModel {
 	private let digitTest: DigitTest
 
 	private var questions: [DigitTestQuestion] = []
-	private var responses: [DigitTesResponse] = []
+	private var responses: [DigitTestResponse] = []
 
 	private var expectingDigits: [Int] = []
 
