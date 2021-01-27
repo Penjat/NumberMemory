@@ -15,6 +15,7 @@ class DigitTestViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 		viewModel.viewState.subscribe(onNext: { viewState in
 			self.phraseLabel.text = viewState.questionText
+			self.answerLabel.text =  viewState.correctDigits
 		}).disposed(by: disposeBag)
 
 		viewModel.viewEffects.subscribe(onNext: { viewEffect in
@@ -125,7 +126,8 @@ class DigitTestViewController: UIViewController {
 	func process(effect: DigitTestViewEffect) {
 		switch effect {
 		case .showMessage(let message):
-			answerLabel.text = message
+			break
+//			answerLabel.text = message
 		}
 	}
 }

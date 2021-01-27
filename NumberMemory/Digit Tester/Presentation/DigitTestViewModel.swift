@@ -8,7 +8,7 @@ enum DigitTestViewIntent {
 
 enum DigitTestViewResult {
 	case askQuestion(DigitTestQuestion)
-	case correctDigit
+	case correctDigit(Int)
 	case correctPhrase
 	case incorrect
 }
@@ -19,8 +19,9 @@ enum DigitTestViewEffect {
 
 struct DigitTestViewState {
 	let questionText: String
+	let correctDigits: String
 	static func initialState() -> DigitTestViewState {
-		return DigitTestViewState(questionText: "")
+		return DigitTestViewState(questionText: "", correctDigits: "")
 	}
 }
 
@@ -72,7 +73,7 @@ class DigitTestViewModel {
 						self.expectingDigits = question.answer.reversed()
 						return Observable.from([Observable<DigitTestViewResult>.just(.correctPhrase),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.seconds(2), scheduler: MainScheduler.instance)]).concat()
 					}
-					return Observable<DigitTestViewResult>.just(.correctDigit)
+					return Observable<DigitTestViewResult>.just(.correctDigit(expecting))
 				}
 				return Observable<DigitTestViewResult>.just(.incorrect)
 			}
@@ -96,16 +97,21 @@ private extension Observable where Element == DigitTestViewResult {
 		return	scan(initialState) { prevState, result in
 			switch result {
 
-			case .correctDigit:
-				return prevState
-
+			case .correctDigit(let digit):
+				return DigitTestViewState(
+					questionText: prevState.questionText,
+					correctDigits: prevState.correctDigits + "\(digit)")
 			case .incorrect:
 				print("incorrect")
 				return prevState
 			case .askQuestion(let question):
-				return DigitTestViewState(questionText: question.phrase)
+				return DigitTestViewState(
+					questionText: question.phrase,
+					correctDigits: "")
 			case .correctPhrase:
-				return DigitTestViewState(questionText: "")
+				return DigitTestViewState(
+					questionText: "",
+					correctDigits: "")
 			}
 		}
 	}
@@ -114,7 +120,7 @@ private extension Observable where Element == DigitTestViewResult {
 		return  map{result -> DigitTestViewEffect in
 			switch result {
 
-			case .correctDigit:
+			case .correctDigit(let Int):
 				return .showMessage("correct")
 			case .incorrect:
 				print("incorrect")
