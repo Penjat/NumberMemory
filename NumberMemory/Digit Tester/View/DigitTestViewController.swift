@@ -28,6 +28,31 @@ class DigitTestViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	override func viewDidLoad() {
+        super.viewDidLoad()
+		setUpViews()
+		viewModel.processIntent(intent: .startTest)
+    }
+
+	func setUpViews() {
+		view.backgroundColor = .blue
+
+		view.addSubview(mainStack)
+		mainStack.translatesAutoresizingMaskIntoConstraints = false
+		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
+		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+
+		mainStack.addArrangedSubview(phraseLabel)
+		mainStack.addArrangedSubview(answerLabel)
+		mainStack.addArrangedSubview(feedbackLabel)
+
+		mainStack.addArrangedSubview(keyStack)
+		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
+
+	}
+
 	//MARK: Views
 
 	lazy var mainStack: UIStackView = {
@@ -54,6 +79,14 @@ class DigitTestViewController: UIViewController {
 		label.textColor = .yellow
 		label.keyboardType = .numberPad
 		label.textAlignment = .center
+		return label
+	}()
+
+	let feedbackLabel: UILabel = {
+		let label = UILabel()
+		label.text = ""
+		label.textAlignment = .center
+		label.font = UIFont.CustomStyle.feedbackFont
 		return label
 	}()
 
@@ -98,26 +131,6 @@ class DigitTestViewController: UIViewController {
 		return stack
 	}()
 
-	//MARK: Set-up
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		view.backgroundColor = .blue
-
-		view.addSubview(mainStack)
-		mainStack.translatesAutoresizingMaskIntoConstraints = false
-		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
-		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-
-		mainStack.addArrangedSubview(phraseLabel)
-		mainStack.addArrangedSubview(answerLabel)
-
-		mainStack.addArrangedSubview(keyStack)
-		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
-		viewModel.processIntent(intent: .startTest)
-    }
 
 	@objc func pressedKey(sender: UIButton) {
 		viewModel.processIntent(intent: .enterNumber(sender.tag))
@@ -126,8 +139,15 @@ class DigitTestViewController: UIViewController {
 	func process(effect: DigitTestViewEffect) {
 		switch effect {
 		case .showMessage(let message):
-			break
-//			answerLabel.text = message
+			feedbackLabel.alpha = 1
+			feedbackLabel.transform = CGAffineTransform.init(translationX: 0.0, y: 40)
+			UIView.animate(withDuration: 0.6, animations: {
+				self.feedbackLabel.text = message
+				self.feedbackLabel.alpha = 0
+				self.feedbackLabel.transform = CGAffineTransform.init(translationX: 0.0, y: 0.0)
+			})
+
+
 		}
 	}
 }

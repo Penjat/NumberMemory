@@ -56,18 +56,20 @@ class DigitTestViewModel {
 	private func intentToResult(intents: Observable<DigitTestViewIntent>) -> Observable<DigitTestViewResult> {
 		return intents.flatMap { intent -> Observable<DigitTestViewResult> in
 			switch intent {
+
 			case .startTest:
 				print("Starting Test.")
 				let question = self.generateQuestion(numDigits: 4)
 				self.expectingDigits = question.answer.reversed()
 				return Observable<DigitTestViewResult>.just(.askQuestion(question))
+
 			case .enterNumber(let number):
 				print("entered number: \(number)")
 				guard let expecting = self.expectingDigits.last else {
 					return Observable<DigitTestViewResult>.empty()
 				}
 				if number == expecting {
-					self.expectingDigits.popLast()
+					self.expectingDigits.removeLast()
 					if self.expectingDigits.isEmpty {
 						let question = self.generateQuestion(numDigits: 4)
 						self.expectingDigits = question.answer.reversed()
@@ -120,12 +122,12 @@ private extension Observable where Element == DigitTestViewResult {
 		return  map{result -> DigitTestViewEffect in
 			switch result {
 
-			case .correctDigit(let Int):
+			case .correctDigit:
 				return .showMessage("correct")
 			case .incorrect:
 				print("incorrect")
 				return .showMessage("inncorrect")
-			case .askQuestion(let question):
+			case .askQuestion:
 				return .showMessage("")
 			case .correctPhrase:
 				return .showMessage("")

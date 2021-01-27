@@ -187,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				0BCEC7A725AF257900C1C418 /* DigitTestViewController.swift */,
+				0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -254,7 +255,6 @@
 				0BA9874525BB594B0095FA09 /* Domain */,
 				0BA9874425BB59410095FA09 /* Presentation */,
 				0BA9874625BB59540095FA09 /* View */,
-				0BCEC7A925AF26FF00C1C418 /* DigitTesterConfigViewController.swift */,
 			);
 			path = "Digit Tester";
 			sourceTree = "<group>";
