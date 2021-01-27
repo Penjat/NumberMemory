@@ -17,6 +17,10 @@ class DigitTestViewController: UIViewController {
 			self.phraseLabel.text = viewState.questionText
 		}).disposed(by: disposeBag)
 
+		viewModel.viewEffects.subscribe(onNext: { viewEffect in
+			self.process(effect: viewEffect)
+		}).disposed(by: disposeBag)
+
 	}
 
 	required init?(coder: NSCoder) {
@@ -116,5 +120,12 @@ class DigitTestViewController: UIViewController {
 
 	@objc func pressedKey(sender: UIButton) {
 		viewModel.processIntent(intent: .enterNumber(sender.tag))
+	}
+
+	func process(effect: DigitTestViewEffect) {
+		switch effect {
+		case .showMessage(let message):
+			answerLabel.text = message
+		}
 	}
 }

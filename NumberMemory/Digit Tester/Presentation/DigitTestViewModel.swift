@@ -13,6 +13,10 @@ enum DigitTestViewResult {
 	case incorrect
 }
 
+enum DigitTestViewEffect {
+	case showMessage(String)
+}
+
 struct DigitTestViewState {
 	let questionText: String
 	static func initialState() -> DigitTestViewState {
@@ -25,6 +29,9 @@ class DigitTestViewModel {
 	private lazy var results: Observable<DigitTestViewResult> = { intentToResult(intents: intentSubject).share()} ()
 	public lazy var viewState: Observable<DigitTestViewState> = {
 		results.resultsToViewState()
+	}()
+	public lazy var viewEffects: Observable<DigitTestViewEffect> = {
+		results.resultsToViewEffect()
 	}()
 
 	private let digitTest: DigitTest
@@ -90,18 +97,33 @@ private extension Observable where Element == DigitTestViewResult {
 			switch result {
 
 			case .correctDigit:
-				return DigitTestViewState(questionText: "correct")
+				return prevState
 
 			case .incorrect:
 				print("incorrect")
-				return DigitTestViewState(questionText: "inncorrect")
+				return prevState
 			case .askQuestion(let question):
 				return DigitTestViewState(questionText: question.phrase)
 			case .correctPhrase:
-				return DigitTestViewState(questionText: "phrase comple")
+				return DigitTestViewState(questionText: "")
 			}
+		}
+	}
 
-			return DigitTestViewState(questionText: "")
+	func resultsToViewEffect() -> Observable<DigitTestViewEffect> {
+		return  map{result -> DigitTestViewEffect in
+			switch result {
+
+			case .correctDigit:
+				return .showMessage("correct")
+			case .incorrect:
+				print("incorrect")
+				return .showMessage("inncorrect")
+			case .askQuestion(let question):
+				return .showMessage("")
+			case .correctPhrase:
+				return .showMessage("")
+			}
 		}
 	}
 }
