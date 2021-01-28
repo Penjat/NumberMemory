@@ -2,6 +2,9 @@ import UIKit
 import RxSwift
 
 class DigitTestViewController: UIViewController {
+	enum Constants {
+		static let feedBackFlashTime = 0.8
+	}
 	let disposeBag = DisposeBag()
 	let viewModel: DigitTestViewModel
 	
@@ -180,6 +183,11 @@ class DigitTestViewController: UIViewController {
 
 				self.answerLabel.transform = CGAffineTransform.init(translationX: 0, y: -100).scaledBy(x: 2.4, y: 2.4)
 				self.answerLabel.alpha = 0
+			})
+		case .flashFeedback(_):
+			view.backgroundColor = UIColor.CustomStyle.digitTesterFlash
+			UIView.animate(withDuration: Constants.feedBackFlashTime, animations: {
+				self.view.backgroundColor = UIColor.CustomStyle.digitTesterBackground
 			})
 		}
 	}

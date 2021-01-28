@@ -17,6 +17,7 @@ enum DigitTestViewEffect {
 	case showMessage(String)
 	case phraseComplete
 	case showPhrase
+	case flashFeedback(String)
 }
 
 struct DigitTestViewState {
@@ -131,8 +132,8 @@ private extension Observable where Element == DigitTestViewResult {
 		return  map{result -> DigitTestViewEffect in
 			switch result {
 
-			case .correctDigit:
-				return .showMessage("correct")
+			case .correctDigit(let digit):
+				return .flashFeedback("\(digit)")
 			case .incorrect:
 				print("incorrect")
 				return .showMessage("inncorrect")
