@@ -5,9 +5,9 @@ enum KeyDisplay {
 	var keyValues: [String] {
 		switch self {
 		case .digits:
-			return ["1,2,3,4,5,6,7,8,9,0"]
+			return ["0","1","2","3","4","5","6","7","8","9","0"]
 		case .letters:
-			return ["A","B","C","D","E","S","L","T","N","O"]
+			return ["O","A","B","C","D","E","S","L","T","N"]
 		}
 	}
 }

@@ -52,6 +52,7 @@ class DigitTestViewController: UIViewController {
 		mainStack.addArrangedSubview(answerLabel)
 		mainStack.addArrangedSubview(feedbackLabel)
 
+		let keyStack = createKeyStack()
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
 	}
@@ -94,19 +95,18 @@ class DigitTestViewController: UIViewController {
 		return label
 	}()
 
-	private func createKeypadKey(_ number: Int) -> UIView {
+	private func createKeypadKey(number: Int, display: String) -> UIView {
 		let button = UIButton()
 		button.backgroundColor = UIColor.CustomStyle.keypadKey
 		button.titleLabel?.font = UIFont.CustomStyle.keypad
-		let numberString = "\(number)"
 		button.tag = number
-		button.setTitle(numberString, for: .normal)
+		button.setTitle(display, for: .normal)
 		button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
 		button.layer.cornerRadius = 8.0
 		return button
 	}
 
-	lazy var keyStack: UIView = {
+	func createKeyStack() -> UIView {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.distribution = .fillEqually
@@ -119,21 +119,21 @@ class DigitTestViewController: UIViewController {
 			stack.addArrangedSubview(horizontalStack)
 			horizontalStack.spacing = 16.0
 
-			for y in 0..<3 {
-				let index = i*3 + y
-				if index == 9 || index == 11 {
-					horizontalStack.addArrangedSubview(UIView())
-				} else if index == 10 {
-					let button = createKeypadKey(0)
-					horizontalStack.addArrangedSubview(button)
-				} else {
-					let button = createKeypadKey(index+1)
+			if i == 0 {
+				let button = createKeypadKey(number: 0, display: <#T##String#>)
+				horizontalStack.addArrangedSubview(button)
+				horizontalStack.addArrangedSubview(UIView())
+				horizontalStack.addArrangedSubview(UIView())
+			} else {
+				for y in 0..<3 {
+					let index = (i-1)*3 + y
+					let button = createKeypadKey(number: index+1, display: <#String#>)
 					horizontalStack.addArrangedSubview(button)
 				}
 			}
 		}
 		return stack
-	}()
+	}
 
 	@objc func pressedKey(sender: UIButton) {
 		viewModel.processIntent(intent: .enterNumber(sender.tag))
