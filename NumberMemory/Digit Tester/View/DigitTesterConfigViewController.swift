@@ -1,6 +1,9 @@
 import UIKit
 
 class DigitTesterConfigViewController: UIViewController {
+	enum Constants {
+		static let StartingNumberDigits = 4
+	}
 	lazy var mainStack: UIStackView = {
 		let stack = UIStackView()
 		stack.axis = .vertical
@@ -25,11 +28,21 @@ class DigitTesterConfigViewController: UIViewController {
 		return button
 	}()
 
+	let feedbackSelect: UISegmentedControl = {
+		let control = UISegmentedControl.init(items: ["None","Letters","Digits"])
+		return control
+	}()
+
+	let keySelect: UISegmentedControl = {
+		let control = UISegmentedControl.init(items: ["Numbers","Letters"])
+		return control
+	}()
+
 	lazy var digitStepper: UIStepper = {
 		let stepper = UIStepper()
 		stepper.maximumValue = 4
 		stepper.minimumValue = 1
-		stepper.value = 1
+		stepper.value = Double(Constants.StartingNumberDigits)
 
 		stepper.addTarget(self, action: #selector(digitStepperValueChanged(_:)), for: .touchUpInside)
 		return stepper
@@ -37,7 +50,7 @@ class DigitTesterConfigViewController: UIViewController {
 
 	let numberDigitsLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Number of Digits: 1"
+		label.text = "Number of Digits: \(Constants.StartingNumberDigits)"
 		return label
 	}()
 
@@ -54,6 +67,8 @@ class DigitTesterConfigViewController: UIViewController {
 
 
 		mainStack.addArrangedSubview(digitStack)
+		mainStack.addArrangedSubview(feedbackSelect)
+		mainStack.addArrangedSubview(keySelect)
 
 		digitStack.addArrangedSubview(digitStepper)
 		digitStack.addArrangedSubview(numberDigitsLabel)
@@ -61,7 +76,7 @@ class DigitTesterConfigViewController: UIViewController {
     }
 
 	@objc public func startTest() {
-		let digitTest = DigitTest(numDigits: Int(digitStepper.value))
+		let digitTest = DigitTest(numDigits: Int(digitStepper.value), keyDisplay: .digits, feedback: .none)
 		let viewModel = DigitTestViewModel(digitTest: digitTest, transformer: NumberTransformer())
 		let controller = DigitTestViewController(viewModel: viewModel)
 		self.navigationController?.pushViewController(controller, animated: true)
