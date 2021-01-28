@@ -76,7 +76,22 @@ class DigitTesterConfigViewController: UIViewController {
     }
 
 	@objc public func startTest() {
-		let digitTest = DigitTest(numDigits: Int(digitStepper.value), keyDisplay: .digits, feedback: .none)
+		let keyDisplay: KeyDisplay = keySelect.selectedSegmentIndex == 0 ? .digits : .letters
+
+		let feedbackType: Feedback = {
+			switch feedbackSelect.selectedSegmentIndex {
+			case 0:
+				return .none
+			case 1:
+				return .letters
+			case 2:
+				return .digits
+			default:
+				return .none
+			}
+		}()
+
+		let digitTest = DigitTest(numDigits: Int(digitStepper.value), keyDisplay: keyDisplay, feedback: feedbackType)
 		let viewModel = DigitTestViewModel(digitTest: digitTest, transformer: NumberTransformer())
 		let controller = DigitTestViewController(viewModel: viewModel)
 		self.navigationController?.pushViewController(controller, animated: true)
