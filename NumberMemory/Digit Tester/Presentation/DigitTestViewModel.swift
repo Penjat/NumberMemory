@@ -95,6 +95,10 @@ class DigitTestViewModel {
 
 		return DigitTestQuestion(answer: digits, phrase: numberTransformer.transform(number: DigitNumber(digits: digits)).phraseString)
 	}
+
+	public func keyNames() -> [String] {
+		return digitTest.keyDisplay.keyValues
+	}
 }
 
 private extension Observable where Element == DigitTestViewResult {

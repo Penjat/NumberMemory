@@ -52,7 +52,7 @@ class DigitTestViewController: UIViewController {
 		mainStack.addArrangedSubview(answerLabel)
 		mainStack.addArrangedSubview(feedbackLabel)
 
-		let keyStack = createKeyStack()
+		let keyStack = createKeyStack(keyNames: viewModel.keyNames())
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
 	}
@@ -95,43 +95,53 @@ class DigitTestViewController: UIViewController {
 		return label
 	}()
 
-	private func createKeypadKey(number: Int, display: String) -> UIView {
-		let button = UIButton()
-		button.backgroundColor = UIColor.CustomStyle.keypadKey
-		button.titleLabel?.font = UIFont.CustomStyle.keypad
-		button.tag = number
-		button.setTitle(display, for: .normal)
-		button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
-		button.layer.cornerRadius = 8.0
-		return button
-	}
-
-	func createKeyStack() -> UIView {
+	func createKeyStack(keyNames: [String]) -> UIView {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.distribution = .fillEqually
 		stack.spacing = 16.0
-		for i in 0..<4 {
+
+		func createHorizontalStack() -> UIStackView {
 			let horizontalStack = UIStackView()
 			horizontalStack.axis = .horizontal
 			horizontalStack.distribution = .fillEqually
 			horizontalStack.alignment = .fill
 			stack.addArrangedSubview(horizontalStack)
 			horizontalStack.spacing = 16.0
-
-			if i == 0 {
-				let button = createKeypadKey(number: 0, display: <#T##String#>)
-				horizontalStack.addArrangedSubview(button)
-				horizontalStack.addArrangedSubview(UIView())
-				horizontalStack.addArrangedSubview(UIView())
-			} else {
-				for y in 0..<3 {
-					let index = (i-1)*3 + y
-					let button = createKeypadKey(number: index+1, display: <#String#>)
-					horizontalStack.addArrangedSubview(button)
-				}
-			}
+			return horizontalStack
 		}
+
+		func createKeypadKey(number: Int, display: [String]) -> UIView {
+			let button = UIButton()
+			button.backgroundColor = UIColor.CustomStyle.keypadKey
+			button.titleLabel?.font = UIFont.CustomStyle.keypad
+			button.tag = number
+			button.setTitle(display[number], for: .normal)
+			button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
+			button.layer.cornerRadius = 8.0
+			return button
+		}
+
+		let line1 = createHorizontalStack()
+		line1.addArrangedSubview(createKeypadKey(number: 0, display: keyNames))
+		line1.addArrangedSubview(UIView())
+		line1.addArrangedSubview(UIView())
+
+		let line2 = createHorizontalStack()
+		line2.addArrangedSubview(createKeypadKey(number: 1, display: keyNames))
+		line2.addArrangedSubview(createKeypadKey(number: 2, display: keyNames))
+		line2.addArrangedSubview(createKeypadKey(number: 3, display: keyNames))
+
+		let line3 = createHorizontalStack()
+		line3.addArrangedSubview(createKeypadKey(number: 4, display: keyNames))
+		line3.addArrangedSubview(createKeypadKey(number: 5, display: keyNames))
+		line3.addArrangedSubview(createKeypadKey(number: 6, display: keyNames))
+
+		let line4 = createHorizontalStack()
+		line4.addArrangedSubview(createKeypadKey(number: 7, display: keyNames))
+		line4.addArrangedSubview(createKeypadKey(number: 8, display: keyNames))
+		line4.addArrangedSubview(createKeypadKey(number: 9, display: keyNames))
+
 		return stack
 	}
 
