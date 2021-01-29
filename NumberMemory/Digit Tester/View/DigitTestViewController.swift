@@ -7,9 +7,6 @@ class DigitTestViewController: UIViewController {
 	}
 	let disposeBag = DisposeBag()
 	let viewModel: DigitTestViewModel
-	
-	var answer = ""
-	var answerIndex = 0
 
 	//MARK: Init
 
@@ -58,6 +55,13 @@ class DigitTestViewController: UIViewController {
 		let keyStack = createKeyStack(keyNames: viewModel.keyNames())
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
+
+		mainStack.addSubview(feedbackFlashLabel)
+		feedbackFlashLabel.translatesAutoresizingMaskIntoConstraints = false
+		feedbackFlashLabel.topAnchor.constraint(equalTo: mainStack.topAnchor).isActive = true
+		feedbackFlashLabel.bottomAnchor.constraint(equalTo: keyStack.topAnchor).isActive = true
+		feedbackFlashLabel.widthAnchor.constraint(equalTo: mainStack.widthAnchor, multiplier: 0.6).isActive = true
+		feedbackFlashLabel.centerXAnchor.constraint(equalTo: mainStack.centerXAnchor).isActive = true
 	}
 
 	//MARK: Views
@@ -95,6 +99,19 @@ class DigitTestViewController: UIViewController {
 		label.textAlignment = .center
 		label.font = UIFont.CustomStyle.feedbackFont
 		label.textColor = .white
+		label.adjustsFontSizeToFitWidth = true
+		return label
+	}()
+
+	let feedbackFlashLabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.CustomStyle.feedbackFlashLetter
+		label.text = "O"
+		label.alpha = 0
+		label.textAlignment = .center
+		label.baselineAdjustment = .alignCenters
+		label.adjustsFontSizeToFitWidth = true
+		label.minimumScaleFactor = 0.01
 		return label
 	}()
 
@@ -186,8 +203,10 @@ class DigitTestViewController: UIViewController {
 			})
 		case .flashFeedback(_):
 			view.backgroundColor = UIColor.CustomStyle.digitTesterFlash
+			feedbackFlashLabel.alpha = 1.0
 			UIView.animate(withDuration: Constants.feedBackFlashTime, animations: {
 				self.view.backgroundColor = UIColor.CustomStyle.digitTesterBackground
+				self.feedbackFlashLabel.alpha = 0.0
 			})
 		}
 	}
