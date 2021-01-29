@@ -9,7 +9,7 @@ enum DigitTestViewIntent {
 enum DigitTestViewResult {
 	case askQuestion(DigitTestQuestion)
 	case correctDigit(Int)
-	case correctPhrase(Int)
+	case correctPhrase
 	case incorrect
 }
 
@@ -17,6 +17,7 @@ enum DigitTestViewEffect {
 	case showMessage(String)
 	case phraseComplete
 	case showPhrase
+	case flashFeedback(String)
 }
 
 struct DigitTestViewState {
@@ -37,7 +38,7 @@ class DigitTestViewModel {
 		results.resultsToViewState()
 	}()
 	public lazy var viewEffects: Observable<DigitTestViewEffect> = {
-		results.resultsToViewEffect()
+		resultsToViewEffect(results: results)
 	}()
 
 	private let digitTest: DigitTest
@@ -78,7 +79,7 @@ class DigitTestViewModel {
 					if self.expectingDigits.isEmpty {
 						let question = self.generateQuestion(numDigits: self.digitTest.numDigits)
 						self.expectingDigits = question.answer.reversed()
-						return Observable.from([Observable<DigitTestViewResult>.just(.correctPhrase(expecting)),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.milliseconds(Constants.quesionDelay), scheduler: MainScheduler.instance)]).concat()
+						return Observable.from([Observable<DigitTestViewResult>.just(.correctDigit(expecting)), Observable<DigitTestViewResult>.just(.correctPhrase),Observable<DigitTestViewResult>.just(.askQuestion(question)).delay(.milliseconds(Constants.quesionDelay), scheduler: MainScheduler.instance)]).concat()
 					}
 					return Observable<DigitTestViewResult>.just(.correctDigit(expecting))
 				}
@@ -94,6 +95,34 @@ class DigitTestViewModel {
 		}
 
 		return DigitTestQuestion(answer: digits, phrase: numberTransformer.transform(number: DigitNumber(digits: digits)).phraseString)
+	}
+
+	public func keyNames() -> [String] {
+		return digitTest.keyDisplay.keyValues
+	}
+
+	func resultsToViewEffect(results: Observable<DigitTestViewResult>) -> Observable<DigitTestViewEffect> {
+		return  results.compactMap{result -> DigitTestViewEffect? in
+			switch result {
+
+			case .correctDigit(let digit):
+				switch self.digitTest.feedback {
+				case .none:
+					return nil
+				case .digits:
+					return .flashFeedback("\(digit)")
+				case .letters:
+					return .flashFeedback(self.digitTest.keyDisplay.keyValues[digit])
+				}
+
+			case .incorrect:
+				return .showMessage("inncorrect")
+			case .askQuestion:
+				return .showPhrase
+			case .correctPhrase:
+				return .phraseComplete
+			}
+		}
 	}
 }
 
@@ -115,27 +144,8 @@ private extension Observable where Element == DigitTestViewResult {
 				return DigitTestViewState(
 					questionText: question.phrase,
 					correctDigits: "")
-			case .correctPhrase(let digit):
-				return DigitTestViewState(
-				questionText: prevState.questionText,
-				correctDigits: prevState.correctDigits + "\(digit)")
-			}
-		}
-	}
-
-	func resultsToViewEffect() -> Observable<DigitTestViewEffect> {
-		return  map{result -> DigitTestViewEffect in
-			switch result {
-
-			case .correctDigit:
-				return .showMessage("correct")
-			case .incorrect:
-				print("incorrect")
-				return .showMessage("inncorrect")
-			case .askQuestion:
-				return .showPhrase
 			case .correctPhrase:
-				return .phraseComplete
+				return prevState
 			}
 		}
 	}

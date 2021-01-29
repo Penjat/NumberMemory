@@ -2,11 +2,11 @@ import UIKit
 import RxSwift
 
 class DigitTestViewController: UIViewController {
+	enum Constants {
+		static let feedBackFlashTime = 0.8
+	}
 	let disposeBag = DisposeBag()
 	let viewModel: DigitTestViewModel
-	
-	var answer = ""
-	var answerIndex = 0
 
 	//MARK: Init
 
@@ -52,8 +52,16 @@ class DigitTestViewController: UIViewController {
 		mainStack.addArrangedSubview(answerLabel)
 		mainStack.addArrangedSubview(feedbackLabel)
 
+		let keyStack = createKeyStack(keyNames: viewModel.keyNames())
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
+
+		mainStack.addSubview(feedbackFlashLabel)
+		feedbackFlashLabel.translatesAutoresizingMaskIntoConstraints = false
+		feedbackFlashLabel.topAnchor.constraint(equalTo: mainStack.topAnchor).isActive = true
+		feedbackFlashLabel.bottomAnchor.constraint(equalTo: keyStack.topAnchor).isActive = true
+		feedbackFlashLabel.widthAnchor.constraint(equalTo: mainStack.widthAnchor, multiplier: 0.6).isActive = true
+		feedbackFlashLabel.centerXAnchor.constraint(equalTo: mainStack.centerXAnchor).isActive = true
 	}
 
 	//MARK: Views
@@ -91,49 +99,71 @@ class DigitTestViewController: UIViewController {
 		label.textAlignment = .center
 		label.font = UIFont.CustomStyle.feedbackFont
 		label.textColor = .white
+		label.adjustsFontSizeToFitWidth = true
 		return label
 	}()
 
-	private func createKeypadKey(_ number: Int) -> UIView {
-		let button = UIButton()
-		button.backgroundColor = UIColor.CustomStyle.keypadKey
-		button.titleLabel?.font = UIFont.CustomStyle.keypad
-		let numberString = "\(number)"
-		button.tag = number
-		button.setTitle(numberString, for: .normal)
-		button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
-		button.layer.cornerRadius = 8.0
-		return button
-	}
+	let feedbackFlashLabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.CustomStyle.feedbackFlashLetter
+		label.text = "O"
+		label.alpha = 0
+		label.textAlignment = .center
+		label.baselineAdjustment = .alignCenters
+		label.adjustsFontSizeToFitWidth = true
+		label.minimumScaleFactor = 0.01
+		return label
+	}()
 
-	lazy var keyStack: UIView = {
+	func createKeyStack(keyNames: [String]) -> UIView {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.distribution = .fillEqually
 		stack.spacing = 16.0
-		for i in 0..<4 {
+
+		func createHorizontalStack() -> UIStackView {
 			let horizontalStack = UIStackView()
 			horizontalStack.axis = .horizontal
 			horizontalStack.distribution = .fillEqually
 			horizontalStack.alignment = .fill
 			stack.addArrangedSubview(horizontalStack)
 			horizontalStack.spacing = 16.0
-
-			for y in 0..<3 {
-				let index = i*3 + y
-				if index == 9 || index == 11 {
-					horizontalStack.addArrangedSubview(UIView())
-				} else if index == 10 {
-					let button = createKeypadKey(0)
-					horizontalStack.addArrangedSubview(button)
-				} else {
-					let button = createKeypadKey(index+1)
-					horizontalStack.addArrangedSubview(button)
-				}
-			}
+			return horizontalStack
 		}
+
+		func createKeypadKey(number: Int, display: [String]) -> UIView {
+			let button = UIButton()
+			button.backgroundColor = UIColor.CustomStyle.keypadKey
+			button.titleLabel?.font = UIFont.CustomStyle.keypad
+			button.tag = number
+			button.setTitle(display[number], for: .normal)
+			button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
+			button.layer.cornerRadius = 8.0
+			return button
+		}
+
+		let line1 = createHorizontalStack()
+		line1.addArrangedSubview(createKeypadKey(number: 0, display: keyNames))
+		line1.addArrangedSubview(UIView())
+		line1.addArrangedSubview(UIView())
+
+		let line2 = createHorizontalStack()
+		line2.addArrangedSubview(createKeypadKey(number: 1, display: keyNames))
+		line2.addArrangedSubview(createKeypadKey(number: 2, display: keyNames))
+		line2.addArrangedSubview(createKeypadKey(number: 3, display: keyNames))
+
+		let line3 = createHorizontalStack()
+		line3.addArrangedSubview(createKeypadKey(number: 4, display: keyNames))
+		line3.addArrangedSubview(createKeypadKey(number: 5, display: keyNames))
+		line3.addArrangedSubview(createKeypadKey(number: 6, display: keyNames))
+
+		let line4 = createHorizontalStack()
+		line4.addArrangedSubview(createKeypadKey(number: 7, display: keyNames))
+		line4.addArrangedSubview(createKeypadKey(number: 8, display: keyNames))
+		line4.addArrangedSubview(createKeypadKey(number: 9, display: keyNames))
+
 		return stack
-	}()
+	}
 
 	@objc func pressedKey(sender: UIButton) {
 		viewModel.processIntent(intent: .enterNumber(sender.tag))
@@ -170,6 +200,16 @@ class DigitTestViewController: UIViewController {
 
 				self.answerLabel.transform = CGAffineTransform.init(translationX: 0, y: -100).scaledBy(x: 2.4, y: 2.4)
 				self.answerLabel.alpha = 0
+			})
+		case .flashFeedback(let feedback):
+			view.backgroundColor = UIColor.CustomStyle.digitTesterFlash
+			feedbackFlashLabel.alpha = 0.7
+			feedbackFlashLabel.text = feedback
+			feedbackFlashLabel.textColor = UIColor.CustomStyle.feedbackFlashStart
+
+			UIView.animate(withDuration: Constants.feedBackFlashTime, animations: {
+				self.view.backgroundColor = UIColor.CustomStyle.digitTesterBackground
+				self.feedbackFlashLabel.alpha = 0.0
 			})
 		}
 	}
