@@ -102,13 +102,18 @@ class DigitTestViewModel {
 	}
 
 	func resultsToViewEffect(results: Observable<DigitTestViewResult>) -> Observable<DigitTestViewEffect> {
-		return  results.map{result -> DigitTestViewEffect in
+		return  results.compactMap{result -> DigitTestViewEffect? in
 			switch result {
 
 			case .correctDigit(let digit):
-				let feedbackString = self.digitTest.feedback == .digits ? "\(digit)" : self.digitTest.keyDisplay.keyValues[digit]
-					return .flashFeedback(feedbackString)
-
+				switch self.digitTest.feedback {
+				case .none:
+					return nil
+				case .digits:
+					return .flashFeedback("\(digit)")
+				case .letters:
+					return .flashFeedback(self.digitTest.keyDisplay.keyValues[digit])
+				}
 
 			case .incorrect:
 				return .showMessage("inncorrect")
