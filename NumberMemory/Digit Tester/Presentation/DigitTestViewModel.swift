@@ -106,7 +106,10 @@ class DigitTestViewModel {
 			switch result {
 
 			case .correctDigit(let digit):
-				return .flashFeedback(self.digitTest.keyDisplay.keyValues[digit])
+				let feedbackString = self.digitTest.feedback == .digits ? "\(digit)" : self.digitTest.keyDisplay.keyValues[digit]
+					return .flashFeedback(feedbackString)
+
+
 			case .incorrect:
 				return .showMessage("inncorrect")
 			case .askQuestion:

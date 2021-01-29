@@ -30,11 +30,13 @@ class DigitTesterConfigViewController: UIViewController {
 
 	let feedbackSelect: UISegmentedControl = {
 		let control = UISegmentedControl.init(items: ["None","Letters","Digits"])
+		control.selectedSegmentIndex = 0
 		return control
 	}()
 
 	let keySelect: UISegmentedControl = {
 		let control = UISegmentedControl.init(items: ["Numbers","Letters"])
+		control.selectedSegmentIndex = 0
 		return control
 	}()
 
