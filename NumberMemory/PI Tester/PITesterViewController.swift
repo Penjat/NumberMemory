@@ -9,6 +9,23 @@ class PITesterViewController: UIViewController {
 	let viewModel: PITesterViewModel
 
     //MARK: Views
+	lazy var mainStack: UIStackView = {
+		let stack = UIStackView()
+		stack.axis = .vertical
+		return stack
+	}()
+
+	let correctDigitsLabel: UILabel = {
+		let label = UILabel()
+		label.text = ""
+		return label
+	}()
+
+	let numberCorrectDigitsLabel: UILabel = {
+		let label = UILabel()
+		label.text = "0"
+		return label
+	}()
 
 	//MARK: Init
 	init(viewModel: PITesterViewModel) {
@@ -21,7 +38,6 @@ class PITesterViewController: UIViewController {
 		viewModel.viewEffects.subscribe(onNext: { viewEffect in
 			self.process(effect: viewEffect)
 		}).disposed(by: disposeBag)
-
 	}
 
 	required init?(coder: NSCoder) {
@@ -36,17 +52,25 @@ class PITesterViewController: UIViewController {
 
 	private func setUpViews() {
 		view.backgroundColor = .systemPink
+		view.addSubview(mainStack)
+		mainStack.translatesAutoresizingMaskIntoConstraints = false
+		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
+		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+
+		mainStack.addArrangedSubview(correctDigitsLabel)
+		mainStack.addArrangedSubview(numberCorrectDigitsLabel)
 	}
 
     //MARK: Processing
     private func process(state: PITesterViewState) {
-
+		correctDigitsLabel.text = state.correctDigits
+		numberCorrectDigitsLabel.text = "\(state.numberCorrectDigits)"
 	}
 
 	private func process(effect: PITesterViewEffect) {
-		switch effect {
 
-		}
 	}
     //MARK: Private
 }
