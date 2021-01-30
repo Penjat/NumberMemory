@@ -4,6 +4,7 @@ enum MainMenuOption: Int, CaseIterable {
 	case NUMBER_TRANSFORMER
 	case PI_CHART
 	case DIGIT_TESTER
+	case PI_TESTER
 
 	var titleText: String {
 		switch self {
@@ -13,6 +14,8 @@ enum MainMenuOption: Int, CaseIterable {
 			return "PI Chart"
 		case .DIGIT_TESTER:
 			return "Digit Tester"
+		case .PI_TESTER:
+			return "PI Tester"
 		}
 	}
 }
@@ -58,6 +61,9 @@ class MainViewController: UITableViewController {
 			self.navigationController?.pushViewController(PIListViewController(), animated: true)
 		case .DIGIT_TESTER:
 			self.navigationController?.pushViewController(DigitTesterConfigViewController(), animated: true)
+		case .PI_TESTER:
+			let viewModel = PITesterViewModel(piTester: PITester(startingDigit: 0))
+			self.navigationController?.pushViewController(PITesterViewController(viewModel: viewModel), animated: true)
 		}
 	}
 
