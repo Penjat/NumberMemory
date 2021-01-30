@@ -55,12 +55,15 @@ class PITesterViewModel {
 			switch intent {
 			case .enterDigit(let digit):
 				if self.piTester.checkDigit("\(digit)") {
+					print("correct")
+					self.piTester.advancePosition()
 					let correctDigits = self.piTester.addCorrect(digit: "\(digit)")
 					return Observable<PITesterViewResult>.just(
 						.correct(
 						correctDigits: correctDigits,
 						numberCorrectDigits: correctDigits.count ))
 				}
+				print("incorrect")
 				return Observable<PITesterViewResult>.just(.incorrect)
 			}
 		}

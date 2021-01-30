@@ -58,7 +58,7 @@ class PITesterViewController: UIViewController {
 		keypad.output.subscribe(onNext: { output in
 			switch output {
 			case .pressedKey(number: let number):
-				print("output is: \(number)")
+				self.viewModel.processIntent(intent: .enterDigit(number))
 			}
 		}).disposed(by: disposeBag)
 	}

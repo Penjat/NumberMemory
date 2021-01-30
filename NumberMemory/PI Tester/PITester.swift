@@ -17,4 +17,8 @@ class PITester {
 		correctDigits = correctDigits + digit
 		return correctDigits
 	}
+
+	public func advancePosition() {
+		position += 1
+	}
 }
