@@ -12,7 +12,9 @@ class DigitTestViewController: UIViewController {
 
 	init(viewModel: DigitTestViewModel) {
 		self.viewModel = viewModel
+		keyStack = DigitKeypad(keyNames: viewModel.keyNames())
 		super.init(nibName: nil, bundle: nil)
+
 		viewModel.viewState.subscribe(onNext: { viewState in
 			self.phraseLabel.text = viewState.questionText
 			self.answerLabel.text =  viewState.correctDigits
@@ -26,6 +28,9 @@ class DigitTestViewController: UIViewController {
 			self.process(effect: viewEffect)
 		}).disposed(by: disposeBag)
 
+		keyStack.output.subscribe(onNext: { output in
+			self.processKeypad(output)
+		}).disposed(by: disposeBag)
 	}
 
 	required init?(coder: NSCoder) {
@@ -52,7 +57,6 @@ class DigitTestViewController: UIViewController {
 		mainStack.addArrangedSubview(answerLabel)
 		mainStack.addArrangedSubview(feedbackLabel)
 
-		let keyStack = createKeyStack(keyNames: viewModel.keyNames())
 		mainStack.addArrangedSubview(keyStack)
 		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
 
@@ -74,6 +78,8 @@ class DigitTestViewController: UIViewController {
 		stack.spacing = 64.0
 		return stack
 	}()
+
+	let keyStack: DigitKeypad
 
 	let phraseLabel: UILabel = {
 		let label = UILabel()
@@ -114,60 +120,6 @@ class DigitTestViewController: UIViewController {
 		label.minimumScaleFactor = 0.01
 		return label
 	}()
-
-	func createKeyStack(keyNames: [String]) -> UIView {
-		let stack = UIStackView()
-		stack.axis = .vertical
-		stack.distribution = .fillEqually
-		stack.spacing = 16.0
-
-		func createHorizontalStack() -> UIStackView {
-			let horizontalStack = UIStackView()
-			horizontalStack.axis = .horizontal
-			horizontalStack.distribution = .fillEqually
-			horizontalStack.alignment = .fill
-			stack.addArrangedSubview(horizontalStack)
-			horizontalStack.spacing = 16.0
-			return horizontalStack
-		}
-
-		func createKeypadKey(number: Int, display: [String]) -> UIView {
-			let button = UIButton()
-			button.backgroundColor = UIColor.CustomStyle.keypadKey
-			button.titleLabel?.font = UIFont.CustomStyle.keypad
-			button.tag = number
-			button.setTitle(display[number], for: .normal)
-			button.addTarget(self, action: #selector(pressedKey), for: .touchUpInside)
-			button.layer.cornerRadius = 8.0
-			return button
-		}
-
-		let line1 = createHorizontalStack()
-		line1.addArrangedSubview(createKeypadKey(number: 0, display: keyNames))
-		line1.addArrangedSubview(UIView())
-		line1.addArrangedSubview(UIView())
-
-		let line2 = createHorizontalStack()
-		line2.addArrangedSubview(createKeypadKey(number: 1, display: keyNames))
-		line2.addArrangedSubview(createKeypadKey(number: 2, display: keyNames))
-		line2.addArrangedSubview(createKeypadKey(number: 3, display: keyNames))
-
-		let line3 = createHorizontalStack()
-		line3.addArrangedSubview(createKeypadKey(number: 4, display: keyNames))
-		line3.addArrangedSubview(createKeypadKey(number: 5, display: keyNames))
-		line3.addArrangedSubview(createKeypadKey(number: 6, display: keyNames))
-
-		let line4 = createHorizontalStack()
-		line4.addArrangedSubview(createKeypadKey(number: 7, display: keyNames))
-		line4.addArrangedSubview(createKeypadKey(number: 8, display: keyNames))
-		line4.addArrangedSubview(createKeypadKey(number: 9, display: keyNames))
-
-		return stack
-	}
-
-	@objc func pressedKey(sender: UIButton) {
-		viewModel.processIntent(intent: .enterNumber(sender.tag))
-	}
 
 	func process(effect: DigitTestViewEffect) {
 		switch effect {
@@ -211,6 +163,13 @@ class DigitTestViewController: UIViewController {
 				self.view.backgroundColor = UIColor.CustomStyle.digitTesterBackground
 				self.feedbackFlashLabel.alpha = 0.0
 			})
+		}
+	}
+	//MARK: Internal
+	private func processKeypad(_ output: DigitKeypadOutput) {
+		switch output {
+		case .pressedKey(number: let number):
+			viewModel.processIntent(intent: .enterNumber(number))
 		}
 	}
 }
