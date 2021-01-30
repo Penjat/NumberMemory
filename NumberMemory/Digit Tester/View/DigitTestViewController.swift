@@ -8,68 +8,7 @@ class DigitTestViewController: UIViewController {
 	let disposeBag = DisposeBag()
 	let viewModel: DigitTestViewModel
 
-	//MARK: Init
-
-	init(viewModel: DigitTestViewModel) {
-		self.viewModel = viewModel
-		keyStack = DigitKeypad(keyNames: viewModel.keyNames())
-		super.init(nibName: nil, bundle: nil)
-
-		viewModel.viewState.subscribe(onNext: { viewState in
-			self.phraseLabel.text = viewState.questionText
-			self.answerLabel.text =  viewState.correctDigits
-			self.phraseLabel.alpha = 1
-			self.answerLabel.alpha = 1
-			self.phraseLabel.transform = .identity
-			self.answerLabel.transform = .identity
-		}).disposed(by: disposeBag)
-
-		viewModel.viewEffects.subscribe(onNext: { viewEffect in
-			self.process(effect: viewEffect)
-		}).disposed(by: disposeBag)
-
-		keyStack.output.subscribe(onNext: { output in
-			self.processKeypad(output)
-		}).disposed(by: disposeBag)
-	}
-
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
-	override func viewDidLoad() {
-        super.viewDidLoad()
-		setUpViews()
-		viewModel.processIntent(intent: .startTest)
-    }
-
-	func setUpViews() {
-		view.backgroundColor = .blue
-
-		view.addSubview(mainStack)
-		mainStack.translatesAutoresizingMaskIntoConstraints = false
-		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
-		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-
-		mainStack.addArrangedSubview(phraseLabel)
-		mainStack.addArrangedSubview(answerLabel)
-		mainStack.addArrangedSubview(feedbackLabel)
-
-		mainStack.addArrangedSubview(keyStack)
-		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
-
-		mainStack.addSubview(feedbackFlashLabel)
-		feedbackFlashLabel.translatesAutoresizingMaskIntoConstraints = false
-		feedbackFlashLabel.topAnchor.constraint(equalTo: mainStack.topAnchor).isActive = true
-		feedbackFlashLabel.bottomAnchor.constraint(equalTo: keyStack.topAnchor).isActive = true
-		feedbackFlashLabel.widthAnchor.constraint(equalTo: mainStack.widthAnchor, multiplier: 0.6).isActive = true
-		feedbackFlashLabel.centerXAnchor.constraint(equalTo: mainStack.centerXAnchor).isActive = true
-	}
-
 	//MARK: Views
-
 	lazy var mainStack: UIStackView = {
 		let stack = UIStackView()
 		stack.axis = .vertical
@@ -121,7 +60,66 @@ class DigitTestViewController: UIViewController {
 		return label
 	}()
 
-	func process(effect: DigitTestViewEffect) {
+	//MARK: Init
+	init(viewModel: DigitTestViewModel) {
+		self.viewModel = viewModel
+		self.keyStack = DigitKeypad(keyNames: viewModel.keyNames())
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	//MARK: Set Up
+	override func viewDidLoad() {
+        super.viewDidLoad()
+		setUpRx()
+		setUpViews()
+		viewModel.processIntent(intent: .startTest)
+    }
+
+	func setUpRx() {
+		viewModel.viewState.subscribe(onNext: { viewState in
+			self.process(viewState: viewState)
+		}).disposed(by: disposeBag)
+
+		viewModel.viewEffects.subscribe(onNext: { viewEffect in
+			self.process(effect: viewEffect)
+		}).disposed(by: disposeBag)
+
+		keyStack.output.subscribe(onNext: { output in
+			self.processKeypad(output)
+		}).disposed(by: disposeBag)
+	}
+
+	func setUpViews() {
+		view.backgroundColor = .blue
+
+		view.addSubview(mainStack)
+		mainStack.translatesAutoresizingMaskIntoConstraints = false
+		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
+		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+
+		mainStack.addArrangedSubview(phraseLabel)
+		mainStack.addArrangedSubview(answerLabel)
+		mainStack.addArrangedSubview(feedbackLabel)
+
+		mainStack.addArrangedSubview(keyStack)
+		keyStack.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.5).isActive = true
+
+		mainStack.addSubview(feedbackFlashLabel)
+		feedbackFlashLabel.translatesAutoresizingMaskIntoConstraints = false
+		feedbackFlashLabel.topAnchor.constraint(equalTo: mainStack.topAnchor).isActive = true
+		feedbackFlashLabel.bottomAnchor.constraint(equalTo: keyStack.topAnchor).isActive = true
+		feedbackFlashLabel.widthAnchor.constraint(equalTo: mainStack.widthAnchor, multiplier: 0.6).isActive = true
+		feedbackFlashLabel.centerXAnchor.constraint(equalTo: mainStack.centerXAnchor).isActive = true
+	}
+
+	//MARK: Internal
+	private func process(effect: DigitTestViewEffect) {
 		switch effect {
 		case .showMessage(let message):
 			feedbackLabel.alpha = 1
@@ -165,7 +163,16 @@ class DigitTestViewController: UIViewController {
 			})
 		}
 	}
-	//MARK: Internal
+
+	private func process(viewState: DigitTestViewState) {
+		self.phraseLabel.text = viewState.questionText
+		self.answerLabel.text =  viewState.correctDigits
+		self.phraseLabel.alpha = 1
+		self.answerLabel.alpha = 1
+		self.phraseLabel.transform = .identity
+		self.answerLabel.transform = .identity
+	}
+
 	private func processKeypad(_ output: DigitKeypadOutput) {
 		switch output {
 		case .pressedKey(number: let number):
