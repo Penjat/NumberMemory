@@ -27,16 +27,26 @@ class PITesterViewController: UIViewController {
 		return label
 	}()
 
+	let keypad = DigitKeypad(keyNames: ["0","1","2","3","4","5","6","7","8","9"])
+
 	//MARK: Init
 	init(viewModel: PITesterViewModel) {
 		self.viewModel = viewModel
 		super.init(nibName: nil, bundle: nil)
+		
 		viewModel.viewState.subscribe(onNext: { viewState in
 			self.process(state: viewState)
 		}).disposed(by: disposeBag)
 
 		viewModel.viewEffects.subscribe(onNext: { viewEffect in
 			self.process(effect: viewEffect)
+		}).disposed(by: disposeBag)
+
+		keypad.output.subscribe(onNext: { output in
+			switch output {
+			case .pressedKey(number: let number):
+				print("output is: \(number)")
+			}
 		}).disposed(by: disposeBag)
 	}
 
@@ -61,6 +71,7 @@ class PITesterViewController: UIViewController {
 
 		mainStack.addArrangedSubview(correctDigitsLabel)
 		mainStack.addArrangedSubview(numberCorrectDigitsLabel)
+		mainStack.addArrangedSubview(keypad)
 	}
 
     //MARK: Processing

@@ -10,6 +10,8 @@
 		0B592B8925C4D0F2002FFECF /* PITesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B592B8625C4D0F2002FFECF /* PITesterViewController.swift */; };
 		0B592B8A25C4D0F2002FFECF /* PITesterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B592B8725C4D0F2002FFECF /* PITesterViewModel.swift */; };
 		0B592B8B25C4D0F2002FFECF /* PITester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B592B8825C4D0F2002FFECF /* PITester.swift */; };
+		0B592B8E25C588DD002FFECF /* DigitKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B592B8D25C588DD002FFECF /* DigitKeypad.swift */; };
+		0B592B9025C58BD2002FFECF /* MyKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B592B8F25C58BD2002FFECF /* MyKeypad.swift */; };
 		0B7CFBC6258BC52B007349C6 /* NumberLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7CFBC5258BC52B007349C6 /* NumberLocationCell.swift */; };
 		0B7CFBCA258CDAFF007349C6 /* PiString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7CFBC9258CDAFF007349C6 /* PiString.swift */; };
 		0B8703EC2570201E0008E0DA /* LocationNumberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8703EB2570201E0008E0DA /* LocationNumberData.swift */; };
@@ -76,6 +78,8 @@
 		0B592B8625C4D0F2002FFECF /* PITesterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PITesterViewController.swift; sourceTree = "<group>"; };
 		0B592B8725C4D0F2002FFECF /* PITesterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PITesterViewModel.swift; sourceTree = "<group>"; };
 		0B592B8825C4D0F2002FFECF /* PITester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PITester.swift; sourceTree = "<group>"; };
+		0B592B8D25C588DD002FFECF /* DigitKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitKeypad.swift; sourceTree = "<group>"; };
+		0B592B8F25C58BD2002FFECF /* MyKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeypad.swift; sourceTree = "<group>"; };
 		0B7CFBC5258BC52B007349C6 /* NumberLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberLocationCell.swift; sourceTree = "<group>"; };
 		0B7CFBC9258CDAFF007349C6 /* PiString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiString.swift; sourceTree = "<group>"; };
 		0B8703EB2570201E0008E0DA /* LocationNumberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationNumberData.swift; sourceTree = "<group>"; };
@@ -149,6 +153,15 @@
 				0B592B8825C4D0F2002FFECF /* PITester.swift */,
 			);
 			path = "PI Tester";
+			sourceTree = "<group>";
+		};
+		0B592B8C25C588B6002FFECF /* DigitKeypad */ = {
+			isa = PBXGroup;
+			children = (
+				0B592B8D25C588DD002FFECF /* DigitKeypad.swift */,
+				0B592B8F25C58BD2002FFECF /* MyKeypad.swift */,
+			);
+			path = DigitKeypad;
 			sourceTree = "<group>";
 		};
 		0BA9870825B60C9A0095FA09 /* Fonts */ = {
@@ -297,6 +310,7 @@
 		0BF54A66256310740064AD2E /* NumberMemory */ = {
 			isa = PBXGroup;
 			children = (
+				0B592B8C25C588B6002FFECF /* DigitKeypad */,
 				0BA9870825B60C9A0095FA09 /* Fonts */,
 				0BB75920259130B100F893A7 /* App */,
 				0BB7591F2591307700F893A7 /* Basic Number Transformer */,
@@ -439,6 +453,8 @@
 				0BCEC7AA25AF26FF00C1C418 /* DigitTesterConfigViewController.swift in Sources */,
 				0B7CFBCA258CDAFF007349C6 /* PiString.swift in Sources */,
 				0BF54A6A256310740064AD2E /* SceneDelegate.swift in Sources */,
+				0B592B8E25C588DD002FFECF /* DigitKeypad.swift in Sources */,
+				0B592B9025C58BD2002FFECF /* MyKeypad.swift in Sources */,
 				0BB7591C2590F84200F893A7 /* PListDataStore.swift in Sources */,
 				0B592B8B25C4D0F2002FFECF /* PITester.swift in Sources */,
 				0BA9873D25B880800095FA09 /* BasicTransformerViewModel.swift in Sources */,
