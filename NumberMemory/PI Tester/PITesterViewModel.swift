@@ -61,7 +61,7 @@ class PITesterViewModel {
 					return Observable<PITesterViewResult>.just(
 						.correct(
 						correctDigits: correctDigits,
-						numberCorrectDigits: correctDigits.count ))
+						numberCorrectDigits: self.piTester.correctAnswers))
 				}
 				print("incorrect")
 				return Observable<PITesterViewResult>.just(.incorrect)

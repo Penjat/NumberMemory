@@ -12,12 +12,14 @@ class PITesterViewController: UIViewController {
 	lazy var mainStack: UIStackView = {
 		let stack = UIStackView()
 		stack.axis = .vertical
+		stack.alignment = .leading
 		return stack
 	}()
 
 	let correctDigitsLabel: UILabel = {
 		let label = UILabel()
 		label.text = ""
+		label.textAlignment = .right
 		return label
 	}()
 
@@ -73,8 +75,12 @@ class PITesterViewController: UIViewController {
 		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
 
 		mainStack.addArrangedSubview(correctDigitsLabel)
+		correctDigitsLabel.widthAnchor.constraint(equalTo: mainStack.widthAnchor, multiplier: 0.5).isActive = true
+
 		mainStack.addArrangedSubview(numberCorrectDigitsLabel)
+
 		mainStack.addArrangedSubview(keypad)
+		keypad.widthAnchor.constraint(equalTo: mainStack.widthAnchor).isActive = true
 	}
 
     //MARK: Processing
