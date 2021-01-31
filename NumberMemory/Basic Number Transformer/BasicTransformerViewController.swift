@@ -19,6 +19,7 @@ class BasicTransformerViewController: UIViewController {
 	lazy var numberInputLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .center
+		label.font = UIFont.CustomStyle.digitFont
 		return label
 	}()
 
@@ -27,6 +28,7 @@ class BasicTransformerViewController: UIViewController {
 		label.text = "____"
 		label.numberOfLines = 0
 		label.textAlignment = .center
+		label.font = UIFont.CustomStyle.personNameFont
 		return label
 	}()
 
@@ -52,7 +54,7 @@ class BasicTransformerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.backgroundColor = .systemPink
+		view.backgroundColor = UIColor.CustomStyle.numberTransformerBackground
 		setUpRx()
 		setUpViews()
     }
@@ -78,8 +80,8 @@ class BasicTransformerViewController: UIViewController {
 		mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
 		mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-		mainStack.addArrangedSubview(numberInputLabel)
 		mainStack.addArrangedSubview(outputText)
+		mainStack.addArrangedSubview(numberInputLabel)
 		mainStack.addArrangedSubview(keypad)
 		keypad.widthAnchor.constraint(equalTo: mainStack.widthAnchor).isActive = true
 		keypad.heightAnchor.constraint(equalTo: mainStack.heightAnchor, multiplier: 0.3).isActive = true
