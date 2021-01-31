@@ -2,17 +2,19 @@ import RxSwift
 
 enum BasicTransformerViewIntent {
 	case inputText(String)
+	case pressedBackspace
 }
 
 enum BasicTransformerViewResult {
-	case showPhrase(String)
+	case showPhrase(String, String)
 }
 
 struct BasicTransformerViewState {
 	let phraseText: String
+	let digitsText: String
 
 	static func initialState() -> BasicTransformerViewState {
-		return BasicTransformerViewState(phraseText: "")
+		return BasicTransformerViewState(phraseText: "", digitsText: "")
 	}
 }
 
@@ -23,13 +25,19 @@ class BasicTransformerViewModel {
 		}()
 
 	private let transformer = NumberTransformer()
+	private var digits = ""
 
 	private func intentToResult(intents: Observable<BasicTransformerViewIntent>) -> Observable<BasicTransformerViewResult> {
 		return intents.flatMap { intent -> Observable<BasicTransformerViewResult> in
 			switch intent {
-			case .inputText(let text):
-				let phrase = self.transformer.transform(numberText: text).string
-				return Observable<BasicTransformerViewResult>.just(.showPhrase(phrase))
+			case .inputText(let newDigit):
+				self.digits += newDigit
+				let phrase = self.transformer.transform(numberText: self.digits).string
+				return Observable<BasicTransformerViewResult>.just(.showPhrase(phrase, self.digits))
+			case .pressedBackspace:
+				self.digits = String(self.digits.dropLast())
+				let phrase = self.transformer.transform(numberText: self.digits).string
+				return Observable<BasicTransformerViewResult>.just(.showPhrase(phrase, self.digits))
 			}
 		}
 	}
@@ -47,8 +55,8 @@ private extension Observable where Element == BasicTransformerViewResult {
 
 		return	scan(initialState) { prevState, result in
 			switch result {
-			case .showPhrase(let phrase):
-				return BasicTransformerViewState(phraseText: phrase)
+			case .showPhrase(let phrase, let digits):
+				return BasicTransformerViewState(phraseText: phrase, digitsText: digits)
 			}
 		}
 	}
