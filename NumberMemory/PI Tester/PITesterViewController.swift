@@ -3,7 +3,7 @@ import RxSwift
 
 class PITesterViewController: UIViewController {
 	enum Constants {
-		static let currentDigitTitle = "digit\n"
+		static let currentDigitTitle = "digit #\n"
 		static let numberIncorrectTitle = "incorrect\n"
 		static let numberCorrectTitle = "correct\n"
 	}
@@ -115,7 +115,7 @@ class PITesterViewController: UIViewController {
 		view.backgroundColor = .systemPink
 		view.addSubview(mainStack)
 		mainStack.translatesAutoresizingMaskIntoConstraints = false
-		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+		mainStack.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 8.0).isActive = true
 		mainStack.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
 		mainStack.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
 		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
@@ -144,7 +144,7 @@ class PITesterViewController: UIViewController {
 		correctDigitsLabel.text = state.correctDigits
 		numberCorrectDigitsLabel.text = Constants.numberCorrectTitle + "\(state.numberCorrectDigits)"
 		currecntDigitLabel.text = Constants.currentDigitTitle + "\(state.currentDigit)"
-		numberIncorrectDigitsLabel.text = Constants.numberCorrectTitle + "\(state.numberIncorrect)"
+		numberIncorrectDigitsLabel.text = Constants.numberIncorrectTitle + "\(state.numberIncorrect)"
 	}
 
 	private func process(effect: PITesterViewEffect) {
