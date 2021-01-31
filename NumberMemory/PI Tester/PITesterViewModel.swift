@@ -3,10 +3,12 @@ import RxSwift
 
 //MARK: I/O
 enum PITesterViewIntent {
+	case startUp
 	case enterDigit(Int)
 }
 
 enum PITesterViewResult {
+	case startUp(correctDigits: String, numberCorrectDigits: Int)
 	case correct(correctDigits: String, numberCorrectDigits: Int)
 	case incorrect
 }
@@ -65,6 +67,9 @@ class PITesterViewModel {
 				}
 				print("incorrect")
 				return Observable<PITesterViewResult>.just(.incorrect)
+			case .startUp:
+				return Observable<PITesterViewResult>.just(.startUp(correctDigits: self.piTester.correctDigits,
+				numberCorrectDigits: self.piTester.correctAnswers))
 			}
 		}
 	}
@@ -88,6 +93,10 @@ private extension Observable where Element == PITesterViewResult {
 					numberCorrectDigits: numberCorrectDigits)
 			case .incorrect:
 				return prevState
+			case .startUp(let correctDigits, let numberCorrectDigits):
+				return PITesterViewState(
+				correctDigits: correctDigits,
+				numberCorrectDigits: numberCorrectDigits)
 			}
 		}
 	}

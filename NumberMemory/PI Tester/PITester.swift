@@ -3,7 +3,7 @@ import Foundation
 class PITester {
 	let startingDigit: Int
 	var position = 0
-	private var correctDigits: String
+	private(set) var correctDigits: String
 
 	var correctAnswers = 0
 	private var hasLost = false

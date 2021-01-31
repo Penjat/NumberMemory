@@ -48,6 +48,7 @@ class PITesterViewController: UIViewController {
         super.viewDidLoad()
 		setUpRx()
 		setUpViews()
+		viewModel.processIntent(intent: .startUp)
     }
 
 	private func setUpRx() {
