@@ -8,9 +8,9 @@ enum PITesterViewIntent {
 }
 
 enum PITesterViewResult {
-	case startUp(correctDigits: String, numberCorrectDigits: Int)
-	case correct(correctDigits: String, numberCorrectDigits: Int)
-	case incorrect
+	case startUp(correctDigits: String, startingDigit: Int)
+	case correct(correctDigits: String, numberCorrectDigits: Int, currentDigit: Int)
+	case incorrect(numberIncorrect: Int)
 }
 
 enum PITesterViewEffect {
@@ -20,10 +20,14 @@ enum PITesterViewEffect {
 struct PITesterViewState {
 	let correctDigits: String
 	let numberCorrectDigits: Int
+	let currentDigit: Int
+	let numberIncorrect: Int
 	static func initialState() -> PITesterViewState {
 		return PITesterViewState(
 			correctDigits: "",
-			numberCorrectDigits: 0)
+			numberCorrectDigits: 0,
+			currentDigit: 0,
+			numberIncorrect: 0)
 	}
 }
 
@@ -63,13 +67,14 @@ class PITesterViewModel {
 					return Observable<PITesterViewResult>.just(
 						.correct(
 						correctDigits: correctDigits,
-						numberCorrectDigits: self.piTester.correctAnswers))
+						numberCorrectDigits: self.piTester.correctAnswers,
+						currentDigit: self.piTester.position))
 				}
-				print("incorrect")
-				return Observable<PITesterViewResult>.just(.incorrect)
+				self.piTester.addIncorrect()
+				return Observable<PITesterViewResult>.just(.incorrect(numberIncorrect: self.piTester.numberIncorrectAnswers))
 			case .startUp:
 				return Observable<PITesterViewResult>.just(.startUp(correctDigits: self.piTester.correctDigits,
-				numberCorrectDigits: self.piTester.correctAnswers))
+																	startingDigit: self.piTester.correctAnswers))
 			}
 		}
 	}
@@ -86,17 +91,29 @@ private extension Observable where Element == PITesterViewResult {
 		let initialState = PITesterViewState.initialState()
 		return	scan(initialState) { prevState, result in
 			switch result {
-			case .correct(let correctDigits, let numberCorrectDigits):
+
+			case .correct(let correctDigits, let numberCorrectDigits, let currentDigit):
 				return
 					PITesterViewState(
-					correctDigits: correctDigits,
-					numberCorrectDigits: numberCorrectDigits)
-			case .incorrect:
-				return prevState
-			case .startUp(let correctDigits, let numberCorrectDigits):
+						correctDigits: correctDigits,
+						numberCorrectDigits: numberCorrectDigits,
+						currentDigit: currentDigit,
+						numberIncorrect: prevState.numberIncorrect)
+
+			case .incorrect(let numberIncorrect):
 				return PITesterViewState(
-				correctDigits: correctDigits,
-				numberCorrectDigits: numberCorrectDigits)
+					correctDigits: prevState.correctDigits,
+					numberCorrectDigits: prevState.numberCorrectDigits,
+					currentDigit: prevState.currentDigit,
+				numberIncorrect: numberIncorrect)
+
+			case .startUp(let correctDigits, let startingDigit):
+				return
+					PITesterViewState(
+						correctDigits: correctDigits,
+						numberCorrectDigits: 0,
+						currentDigit: startingDigit,
+						numberIncorrect: 0)
 			}
 		}
 	}

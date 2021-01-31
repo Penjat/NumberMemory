@@ -13,6 +13,14 @@ class PITesterViewController: UIViewController {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.alignment = .leading
+		stack.distribution = .equalCentering
+		return stack
+	}()
+
+	let infoStack: UIStackView = {
+		let stack = UIStackView()
+		stack.axis = .horizontal
+		stack.distribution = .equalCentering
 		return stack
 	}()
 
@@ -26,6 +34,18 @@ class PITesterViewController: UIViewController {
 	}()
 
 	let numberCorrectDigitsLabel: UILabel = {
+		let label = UILabel()
+		label.text = "0"
+		return label
+	}()
+
+	let numberIncorrectDigitsLabel: UILabel = {
+		let label = UILabel()
+		label.text = "0"
+		return label
+	}()
+
+	let currecntDigitLabel: UILabel = {
 		let label = UILabel()
 		label.text = "0"
 		return label
@@ -78,7 +98,11 @@ class PITesterViewController: UIViewController {
 		mainStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
 
 
-		mainStack.addArrangedSubview(numberCorrectDigitsLabel)
+		infoStack.addArrangedSubview(numberCorrectDigitsLabel)
+		infoStack.addArrangedSubview(currecntDigitLabel)
+		infoStack.addArrangedSubview(numberIncorrectDigitsLabel)
+		mainStack.addArrangedSubview(infoStack)
+		infoStack.widthAnchor.constraint(equalTo: mainStack.widthAnchor).isActive = true
 
 		mainStack.addArrangedSubview(correctDigitsLabel)
 		correctDigitsLabel.widthAnchor.constraint(equalTo: mainStack.widthAnchor, multiplier: 0.5).isActive = true
@@ -91,6 +115,8 @@ class PITesterViewController: UIViewController {
     private func process(state: PITesterViewState) {
 		correctDigitsLabel.text = state.correctDigits
 		numberCorrectDigitsLabel.text = "\(state.numberCorrectDigits)"
+		currecntDigitLabel.text = "\(state.currentDigit)"
+		numberIncorrectDigitsLabel.text = "\(state.numberIncorrect)"
 	}
 
 	private func process(effect: PITesterViewEffect) {
