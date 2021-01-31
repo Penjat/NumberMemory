@@ -12,7 +12,7 @@ extension UIFont {
 		static let feedbackFlashLetter: UIFont = UIFont(name: "RobotoCondensed-Bold", size: 500.0)!
 		
 		static let piTester = PITesterStyle(correctStream: UIFont.monospacedDigitSystemFont(ofSize: 45, weight: .bold),
-											info: UIFont(name: "Instruction", size: 14.0)!)
+											info: UIFont(name: "Instruction", size: 16.0)!)
 	}
 
 	struct PITesterStyle {

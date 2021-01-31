@@ -66,6 +66,14 @@ class PITesterViewController: UIViewController {
 		return label
 	}()
 
+	let flashDigitLabel: UILabel = {
+		let label = UILabel()
+		label.text = "HI"
+		label.font = UIFont.CustomStyle.feedbackFlashLetter
+		label.alpha = 0
+		return label
+	}()
+
 	let keypad = DigitKeypad(keyNames: ["0","1","2","3","4","5","6","7","8","9"])
 
 	//MARK: Init
@@ -124,6 +132,11 @@ class PITesterViewController: UIViewController {
 
 		mainStack.addArrangedSubview(keypad)
 		keypad.widthAnchor.constraint(equalTo: mainStack.widthAnchor).isActive = true
+
+		correctDigitsLabel.addSubview(flashDigitLabel)
+		flashDigitLabel.translatesAutoresizingMaskIntoConstraints = false
+		flashDigitLabel.centerXAnchor.constraint(equalTo: correctDigitsLabel.trailingAnchor).isActive = true
+		flashDigitLabel.centerYAnchor.constraint(equalTo: correctDigitsLabel.centerYAnchor).isActive = true
 	}
 
     //MARK: Processing
@@ -135,7 +148,16 @@ class PITesterViewController: UIViewController {
 	}
 
 	private func process(effect: PITesterViewEffect) {
-
+		switch effect {
+		case .flashDigit(let digitString):
+			flashDigitLabel.text = digitString
+			flashDigitLabel.alpha = 1
+			flashDigitLabel.transform = .identity
+			UIView.animate(withDuration: 0.6, animations: {
+				self.flashDigitLabel.alpha = 0
+				self.flashDigitLabel.transform = CGAffineTransform.init(scaleX: 0.6, y: 0.6)
+			})
+		}
 	}
     //MARK: Private
 }

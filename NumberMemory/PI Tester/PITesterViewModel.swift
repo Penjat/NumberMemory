@@ -14,7 +14,7 @@ enum PITesterViewResult {
 }
 
 enum PITesterViewEffect {
-
+	case flashDigit(String)
 }
 
 struct PITesterViewState {
@@ -81,7 +81,14 @@ class PITesterViewModel {
 	//MARK: - Output
     private func resultsToViewEffect(results: Observable<PITesterViewResult>) -> Observable<PITesterViewEffect> {
 		return  results.compactMap{result -> PITesterViewEffect? in
-			return nil
+			switch result {
+			case .startUp( _, _):
+				return nil
+			case .correct(let correctDigits, _, _):
+				return .flashDigit(String(correctDigits.suffix(1)))
+			case .incorrect:
+				return nil
+			}
 		}
 	}
 }
