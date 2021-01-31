@@ -80,7 +80,12 @@ class DigitKeypad: UIView {
 	}
 
 	@objc func pressedKey(sender: UIButton) {
-		print("pressed key \(sender.tag)")
 		output.onNext(.pressedKey(number: sender.tag))
+		sender.transform = CGAffineTransform.init(scaleX: 1.4, y: 1.4)
+		sender.backgroundColor = UIColor.CustomStyle.keypadKeyPressed
+		UIView.animate(withDuration: 0.5, animations: {
+			sender.transform = .identity
+			sender.backgroundColor = UIColor.CustomStyle.keypadKey
+		})
 	}
 }

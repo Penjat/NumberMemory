@@ -51,7 +51,6 @@ class DigitTestViewController: UIViewController {
 	let feedbackFlashLabel: UILabel = {
 		let label = UILabel()
 		label.font = UIFont.CustomStyle.feedbackFlashLetter
-		label.text = "O"
 		label.alpha = 0
 		label.textAlignment = .center
 		label.baselineAdjustment = .alignCenters

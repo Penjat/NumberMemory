@@ -251,8 +251,8 @@
 		0BB7591F2591307700F893A7 /* Basic Number Transformer */ = {
 			isa = PBXGroup;
 			children = (
-				0BF54A7B256311C30064AD2E /* BasicTransformerViewController.swift */,
 				0BA9873C25B880800095FA09 /* BasicTransformerViewModel.swift */,
+				0BF54A7B256311C30064AD2E /* BasicTransformerViewController.swift */,
 			);
 			path = "Basic Number Transformer";
 			sourceTree = "<group>";

@@ -3,7 +3,8 @@ import Foundation
 class PITester {
 	let startingDigit: Int
 	var position = 0
-	private var correctDigits: String
+	private(set) var correctDigits: String
+	private(set) var numberIncorrectAnswers: Int = 0
 
 	var correctAnswers = 0
 	private var hasLost = false
@@ -23,6 +24,10 @@ class PITester {
 			correctAnswers += 1
 		}
 		return correctDigits
+	}
+
+	public func addIncorrect() {
+		numberIncorrectAnswers += 1
 	}
 
 	public func incorrect() {
